@@ -1,0 +1,4 @@
+services:
+#    xoptov_filter.example:
+#        class: Xoptov\FilterBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
