@@ -2,7 +2,7 @@
 
 namespace Xoptov\FilterBundle\Model;
 
-abstract class AbstractField implements FieldInterface
+class Field implements FieldInterface
 {
     /** @var mixed */
     protected $id;

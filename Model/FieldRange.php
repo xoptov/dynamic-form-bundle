@@ -2,7 +2,7 @@
 
 namespace Xoptov\FilterBundle\Model;
 
-class FieldRange extends AbstractField
+class FieldRange extends Field
 {
     /** @var float */
     private $valueFrom;

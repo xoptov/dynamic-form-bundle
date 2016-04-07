@@ -2,7 +2,7 @@
 
 namespace Xoptov\FilterBundle\Model;
 
-class FieldLiteral extends AbstractField
+class FieldLiteral extends Field
 {
     /** @var string */
     private $value;

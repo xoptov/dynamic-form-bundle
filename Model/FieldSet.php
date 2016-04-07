@@ -2,7 +2,7 @@
 
 namespace Xoptov\FilterBundle\Model;
 
-class FieldSet extends AbstractField
+class FieldSet extends Field
 {
     /** @var array */
     private $valueSet;
