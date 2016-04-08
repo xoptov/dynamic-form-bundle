@@ -1,6 +1,6 @@
 <?php
 
-namespace Xoptov\FilterBundle\Model;
+namespace Xoptov\DynamicFormBundle\Model;
 
 class Field implements FieldInterface
 {
@@ -10,8 +10,8 @@ class Field implements FieldInterface
     /** @var string */
     protected $type;
 
-    /** @var Filter */
-    protected $filter;
+    /** @var Form */
+    protected $form;
 
     /** @var PropertyInterface */
     protected $property;
@@ -59,7 +59,7 @@ class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setFilter(Filter $filter)
+    public function setForm(Form $filter)
     {
         $this->filter = $filter;
 
@@ -69,9 +69,9 @@ class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getFilter()
+    public function getForm()
     {
-        return $this->filter;
+        return $this->form;
     }
 
     /**

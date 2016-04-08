@@ -1,6 +1,6 @@
 <?php
 
-namespace Xoptov\FilterBundle\Model;
+namespace Xoptov\DynamicFormBundle\Model;
 
 class FieldRange extends Field
 {

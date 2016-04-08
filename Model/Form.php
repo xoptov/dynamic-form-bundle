@@ -1,8 +1,8 @@
 <?php
 
-namespace Xoptov\FilterBundle\Model;
+namespace Xoptov\DynamicFormBundle\Model;
 
-class Filter
+class Form
 {
     /** @var mixed */
     protected $id;
@@ -15,7 +15,7 @@ class Filter
 
     /**
      * @param mixed $id
-     * @return Filter
+     * @return Form
      */
     public function setId($id)
     {
@@ -34,7 +34,7 @@ class Filter
 
     /**
      * @param mixed $name
-     * @return Filter
+     * @return Form
      */
     public function setName($name)
     {
@@ -53,7 +53,7 @@ class Filter
 
     /**
      * @param mixed $fields
-     * @return Filter
+     * @return Form
      */
     public function setFields($fields)
     {

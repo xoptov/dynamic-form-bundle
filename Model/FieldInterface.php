@@ -1,6 +1,6 @@
 <?php
 
-namespace Xoptov\FilterBundle\Model;
+namespace Xoptov\DynamicFormBundle\Model;
 
 interface FieldInterface
 {
@@ -27,15 +27,15 @@ interface FieldInterface
     public function getType();
 
     /**
-     * @param Filter $filter
+     * @param Form $form
      * @return FieldInterface
      */
-    public function setFilter(Filter $filter);
+    public function setForm(Form $form);
 
     /**
-     * @return Filter
+     * @return Form
      */
-    public function getFilter();
+    public function getForm();
 
     /**
      * @param PropertyInterface $property
