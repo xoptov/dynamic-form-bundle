@@ -1,8 +1,12 @@
 <?php
 
-namespace Xoptov\DynamicFormBundle\Model;
+namespace Xoptov\DynamicFormBundle\Entity;
 
-class Field implements FieldInterface
+use Xoptov\DynamicFormBundle\Model\FieldInterface;
+use Xoptov\DynamicFormBundle\Model\FormInterface;
+use Xoptov\DynamicFormBundle\Model\PropertyInterface;
+
+abstract class AbstractField implements FieldInterface
 {
     /** @var mixed */
     protected $id;
@@ -10,7 +14,7 @@ class Field implements FieldInterface
     /** @var string */
     protected $type;
 
-    /** @var Form */
+    /** @var FormInterface */
     protected $form;
 
     /** @var PropertyInterface */
@@ -59,9 +63,9 @@ class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setForm(Form $filter)
+    public function setForm(FormInterface $form)
     {
-        $this->filter = $filter;
+        $this->form = $form;
 
         return $this;
     }

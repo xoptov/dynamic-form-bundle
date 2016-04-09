@@ -27,13 +27,13 @@ interface FieldInterface
     public function getType();
 
     /**
-     * @param Form $form
+     * @param FormInterface $form
      * @return FieldInterface
      */
-    public function setForm(Form $form);
+    public function setForm(FormInterface $form);
 
     /**
-     * @return Form
+     * @return FormInterface
      */
     public function getForm();
 

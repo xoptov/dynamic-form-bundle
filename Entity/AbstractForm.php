@@ -1,8 +1,10 @@
 <?php
 
-namespace Xoptov\DynamicFormBundle\Model;
+namespace Xoptov\DynamicFormBundle\Entity;
 
-class Form
+use Xoptov\DynamicFormBundle\Model\FormInterface;
+
+abstract class AbstractForm implements FormInterface
 {
     /** @var mixed */
     protected $id;
@@ -14,18 +16,7 @@ class Form
     protected $fields;
 
     /**
-     * @param mixed $id
-     * @return Form
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -33,8 +24,7 @@ class Form
     }
 
     /**
-     * @param mixed $name
-     * @return Form
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -44,7 +34,7 @@ class Form
     }
     
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -52,8 +42,7 @@ class Form
     }
 
     /**
-     * @param mixed $fields
-     * @return Form
+     * {@inheritdoc}
      */
     public function setFields($fields)
     {
@@ -63,7 +52,7 @@ class Form
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getFields()
     {
