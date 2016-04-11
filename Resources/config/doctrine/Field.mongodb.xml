@@ -1,7 +1,7 @@
 <doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
-    <mapped-superclass name="Xoptov\DynamicFormBundle\Entity\Field">
+    <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Field">
         <field name="id" id="true" type="string"/>
         <field name="formType" type="string"/>
         <field name="priority" type="integer"/>
