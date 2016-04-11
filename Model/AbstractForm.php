@@ -1,8 +1,6 @@
 <?php
 
-namespace Xoptov\DynamicFormBundle\Entity;
-
-use Xoptov\DynamicFormBundle\Model\FormInterface;
+namespace Xoptov\DynamicFormBundle\Model;
 
 abstract class AbstractForm implements FormInterface
 {

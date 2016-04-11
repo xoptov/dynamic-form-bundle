@@ -1,10 +1,6 @@
 <?php
 
-namespace Xoptov\DynamicFormBundle\Entity;
-
-use Xoptov\DynamicFormBundle\Model\FieldInterface;
-use Xoptov\DynamicFormBundle\Model\FormInterface;
-use Xoptov\DynamicFormBundle\Model\PropertyInterface;
+namespace Xoptov\DynamicFormBundle\Model;
 
 abstract class AbstractField implements FieldInterface
 {
