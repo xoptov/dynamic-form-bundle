@@ -4,6 +4,6 @@
     <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Form">
         <field name="id" id="true" type="string"/>
         <field name="name" type="string"/>
-        <embed-many field="fields" target-document="Xoptov\DynamicFormBundle\Model\Field"/>
+        <embed-many field="fields" target-document="Xoptov\DynamicFormBundle\Model\FieldInterface"/>
     </mapped-superclass>
 </doctrine-mongo-mapping>
