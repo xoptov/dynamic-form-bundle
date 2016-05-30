@@ -9,7 +9,6 @@
             "email": "xoptov@mail.ru"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.3|~3.0"
