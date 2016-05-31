@@ -10,7 +10,7 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Xoptov\\DynamicFormBundle": "" }
+        "psr-4": { "Xoptov\\DynamicFormBundle\\": "" }
     },
     "require": {
         "php": ">=5.3.3",
