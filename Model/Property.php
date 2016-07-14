@@ -2,7 +2,7 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-abstract class AbstractForm implements FormInterface
+abstract class Property implements PropertyInterface
 {
     /** @var mixed */
     protected $id;
@@ -10,11 +10,11 @@ abstract class AbstractForm implements FormInterface
     /** @var string */
     protected $name;
 
-    /** @var mixed */
-    protected $fields;
+    /** @var MeasureInterface */
+    protected $measure;
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
     public function getId()
     {
@@ -30,7 +30,7 @@ abstract class AbstractForm implements FormInterface
 
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -42,9 +42,9 @@ abstract class AbstractForm implements FormInterface
     /**
      * {@inheritdoc}
      */
-    public function setFields($fields)
+    public function setMeasure(MeasureInterface $measure)
     {
-        $this->fields = $fields;
+        $this->measure = $measure;
 
         return $this;
     }
@@ -52,8 +52,8 @@ abstract class AbstractForm implements FormInterface
     /**
      * {@inheritdoc}
      */
-    public function getFields()
+    public function getMeasure()
     {
-        return $this->fields;
+        return $this->measure;
     }
 }

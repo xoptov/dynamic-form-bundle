@@ -2,8 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Document;
 
-use Xoptov\DynamicFormBundle\Model\AbstractForm;
+use Xoptov\DynamicFormBundle\Model\Form as BaseForm;
 
-class Form extends AbstractForm
+abstract class Form extends BaseForm
 {
 }

@@ -10,6 +10,17 @@ interface FormInterface
     public function getId();
 
     /**
+     * @param string $type
+     * @return FormInterface
+     */
+    public function setType($type);
+
+    /**
+     * @return string
+     */
+    public function getType();
+
+    /**
      * @param string $name
      * @return FormInterface
      */
@@ -24,7 +35,7 @@ interface FormInterface
      * @param FieldInterface[] $fields
      * @return FormInterface
      */
-    public function setFields($fields);
+    public function setFields(array $fields);
 
     /**
      * @return FieldInterface[]

@@ -2,13 +2,15 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-abstract class AbstractField implements FieldInterface
+use Doctrine\Common\Collections\ArrayCollection;
+
+abstract class Field implements FieldInterface
 {
     /** @var mixed */
     protected $id;
 
     /** @var string */
-    protected $type;
+    protected $class;
 
     /** @var FormInterface */
     protected $form;
@@ -16,11 +18,11 @@ abstract class AbstractField implements FieldInterface
     /** @var PropertyInterface */
     protected $property;
 
-    /** @var string */
-    protected $formType;
-    
-    /** @var int */
+    /** @var integer */
     protected $priority;
+
+    /** @var ArrayCollection */
+    protected $constraints;
 
     /**
      * {@inheritdoc}
@@ -33,27 +35,19 @@ abstract class AbstractField implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setId($id)
+    public function setClass($class)
     {
-        $this->id = $id;
-        
+        $this->class = $class;
+
         return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setType($type)
+    public function getClass()
     {
-        $this->type = $type;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return $this->type;
+        return $this->class;
     }
 
     /**
@@ -80,10 +74,10 @@ abstract class AbstractField implements FieldInterface
     public function setProperty(PropertyInterface $property)
     {
         $this->property = $property;
-
+        
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -95,36 +89,56 @@ abstract class AbstractField implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setFormType($formType)
-    {
-        $this->formType = $formType;
-
-        return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getFormType()
-    {
-        return $this->formType;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setPriority($priority)
     {
         $this->priority = $priority;
 
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addConstraint(ConstraintInterface $constraint)
+    {
+        $this->constraints->add($constraint);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeConstraint(ConstraintInterface $constraint)
+    {
+        $this->constraints->removeElement($constraint);
+
+        return $this;
     }
 }

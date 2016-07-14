@@ -2,9 +2,8 @@
                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
-    <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Form">
-        <field name="id" id="true" strategy="AUTO" type="string"/>
-        <field name="name" type="string"/>
-        <reference-many target-document="Xoptov\DynamicFormBundle\Model\FieldInterface" field="fields"/>
-    </mapped-superclass>
+    <embedded-document name="Xoptov\DynamicFormBundle\Document\Constraint">
+        <field name="class" type="string"/>
+        <field name="settings" type="collection"/>
+    </embedded-document>
 </doctrine-mongo-mapping>
