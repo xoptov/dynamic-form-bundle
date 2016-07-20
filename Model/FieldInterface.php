@@ -5,37 +5,20 @@ namespace Xoptov\DynamicFormBundle\Model;
 interface FieldInterface
 {
     /**
-     * @param mixed $id
-     * @return FieldInterface
-     */
-    public function setId($id);
-
-    /**
      * @return mixed
      */
     public function getId();
 
     /**
-     * @param string $type
+     * @param string $class
      * @return FieldInterface
      */
-    public function setType($type);
+    public function setClass($class);
 
     /**
      * @return string
      */
-    public function getType();
-
-    /**
-     * @param FormInterface $form
-     * @return FieldInterface
-     */
-    public function setForm(FormInterface $form);
-
-    /**
-     * @return FormInterface
-     */
-    public function getForm();
+    public function getClass();
 
     /**
      * @param PropertyInterface $property
@@ -49,17 +32,6 @@ interface FieldInterface
     public function getProperty();
 
     /**
-     * @param string $formType
-     * @return FieldInterface
-     */
-    public function setFormType($formType);
-
-    /**
-     * @return string
-     */
-    public function getFormType();
-
-    /**
      * @param int $priority
      * @return FieldInterface
      */
@@ -69,4 +41,27 @@ interface FieldInterface
      * @return int
      */
     public function getPriority();
+
+    /**
+     * @param ConstraintInterface[] $constraints
+     * @return FieldInterface
+     */
+    public function setConstraints(array $constraints);
+
+    /**
+     * @return ConstraintInterface[]
+     */
+    public function getConstraints();
+
+    /**
+     * @param ConstraintInterface $constraint
+     * @return FieldInterface
+     */
+    public function addConstraint(ConstraintInterface $constraint);
+
+    /**
+     * @param ConstraintInterface $constraint
+     * @return FieldInterface
+     */
+    public function removeConstraint(ConstraintInterface $constraint);
 }

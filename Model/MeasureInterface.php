@@ -2,7 +2,7 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-interface PropertyInterface
+interface MeasureInterface
 {
     /**
      * @return mixed
@@ -11,23 +11,23 @@ interface PropertyInterface
 
     /**
      * @param string $name
-     * @return mixed
+     * @return MeasureInterface
      */
     public function setName($name);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName();
 
     /**
-     * @param MeasureInterface $measure
-     * @return PropertyInterface
-     */
-    public function setMeasure(MeasureInterface $measure);
-
-    /**
+     * @param string $label
      * @return MeasureInterface
      */
-    public function getMeasure();
+    public function setLabel($label);
+
+    /**
+     * @return string
+     */
+    public function getLabel();
 }

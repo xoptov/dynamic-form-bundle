@@ -1,10 +1,17 @@
 <doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                        http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Field">
-        <field name="id" id="true" type="string"/>
-        <field name="formType" type="string"/>
+        <field name="id" type="string" id="true" strategy="AUTO"/>
+        <field name="class" type="string"/>
         <field name="priority" type="integer"/>
-        <reference-many field="property" target-document="Xoptov\DynamicFormBundle\Model\PropertyInterface"/>
+        <field name="enabled" type="boolean"/>
+        <embed-many target-document="Xoptov\DynamicFormBundle\Model\ConstraintInterface" field="constraints"/>
+        <reference-one target-document="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
+            <cascade>
+                <persist/>
+            </cascade>
+        </reference-one>
     </mapped-superclass>
 </doctrine-mongo-mapping>

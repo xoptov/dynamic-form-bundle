@@ -2,8 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Document;
 
-use Xoptov\DynamicFormBundle\Model\AbstractField;
+use Xoptov\DynamicFormBundle\Model\Field as BaseField;
 
-class Field extends AbstractField
+abstract class Field extends BaseField
 {
 }
