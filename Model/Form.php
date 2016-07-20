@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Form implements FormInterface
 {
     /** @var mixed */
@@ -13,8 +15,16 @@ abstract class Form implements FormInterface
     /** @var string */
     protected $name;
 
-    /** @var FieldInterface */
+    /** @var FieldInterface[] */
     protected $fields;
+
+    /**
+     * Form constructor.
+     */
+    public function __construct()
+    {
+        $this->fields = new ArrayCollection();
+    }
 
     /**
      * {@inheritdoc}

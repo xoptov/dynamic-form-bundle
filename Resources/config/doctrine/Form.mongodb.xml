@@ -5,6 +5,5 @@
     <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Form">
         <field name="id" id="true" strategy="AUTO" type="string"/>
         <field name="name" type="string"/>
-        <reference-many target-document="Xoptov\DynamicFormBundle\Model\FieldInterface" field="fields"/>
     </mapped-superclass>
 </doctrine-mongo-mapping>

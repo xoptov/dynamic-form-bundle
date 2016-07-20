@@ -2,6 +2,9 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+/**
+ * @method void setValue($value)
+ */
 abstract class ObjectProperty implements ObjectPropertyInterface
 {
     /** @var string */

@@ -21,17 +21,6 @@ interface FieldInterface
     public function getClass();
 
     /**
-     * @param FormInterface $form
-     * @return FieldInterface
-     */
-    public function setForm(FormInterface $form);
-
-    /**
-     * @return FormInterface
-     */
-    public function getForm();
-
-    /**
      * @param PropertyInterface $property
      * @return FieldInterface
      */

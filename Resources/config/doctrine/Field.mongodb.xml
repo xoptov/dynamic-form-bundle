@@ -2,12 +2,16 @@
                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
-    <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Field" inheritance-type="SINGLE_COLLECTION">
+    <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Field">
         <field name="id" type="string" id="true" strategy="AUTO"/>
         <field name="class" type="string"/>
         <field name="priority" type="integer"/>
+        <field name="enabled" type="boolean"/>
         <embed-many target-document="Xoptov\DynamicFormBundle\Model\ConstraintInterface" field="constraints"/>
-        <reference-one target-document="Xoptov\DynamicFormBundle\Model\FormInterface" field="form"/>
-        <reference-one target-document="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property"/>
+        <reference-one target-document="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
+            <cascade>
+                <persist/>
+            </cascade>
+        </reference-one>
     </mapped-superclass>
 </doctrine-mongo-mapping>

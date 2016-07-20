@@ -3,6 +3,7 @@
 namespace Xoptov\DynamicFormBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 abstract class Field implements FieldInterface
 {
@@ -12,9 +13,6 @@ abstract class Field implements FieldInterface
     /** @var string */
     protected $class;
 
-    /** @var FormInterface */
-    protected $form;
-
     /** @var PropertyInterface */
     protected $property;
 
@@ -23,6 +21,17 @@ abstract class Field implements FieldInterface
 
     /** @var ArrayCollection */
     protected $constraints;
+
+    /** @var boolean */
+    protected $enabled;
+
+    /**
+     * Field constructor.
+     */
+    public function __construct()
+    {
+        $this->class = TextType::class;
+    }
 
     /**
      * {@inheritdoc}
@@ -48,24 +57,6 @@ abstract class Field implements FieldInterface
     public function getClass()
     {
         return $this->class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setForm(FormInterface $form)
-    {
-        $this->form = $form;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getForm()
-    {
-        return $this->form;
     }
 
     /**
@@ -140,5 +131,24 @@ abstract class Field implements FieldInterface
         $this->constraints->removeElement($constraint);
 
         return $this;
+    }
+
+    /**
+     * @param boolean $enabled
+     * @return Field
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 }
