@@ -10,6 +10,17 @@ interface FormInterface
     public function getId();
 
     /**
+     * @param FormInterface $parent
+     * @return FormInterface
+     */
+    public function setParent(FormInterface $parent);
+
+    /**
+     * @return FormInterface
+     */
+    public function getParent();
+
+    /**
      * @param string $type
      * @return FormInterface
      */
