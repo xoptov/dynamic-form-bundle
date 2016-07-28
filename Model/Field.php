@@ -2,9 +2,6 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
 abstract class Field implements FieldInterface
 {
     /** @var mixed */
@@ -19,19 +16,14 @@ abstract class Field implements FieldInterface
     /** @var integer */
     protected $priority;
 
-    /** @var ArrayCollection */
-    protected $constraints;
+    /** @var array */
+    protected $options = array();
 
     /** @var boolean */
     protected $enabled;
 
-    /**
-     * Field constructor.
-     */
-    public function __construct()
-    {
-        $this->class = TextType::class;
-    }
+    /** @var mixed */
+    protected $value;
 
     /**
      * {@inheritdoc}
@@ -98,9 +90,9 @@ abstract class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setConstraints(array $constraints)
+    public function setOptions(array $options)
     {
-        $this->constraints = $constraints;
+        $this->options = $options;
 
         return $this;
     }
@@ -108,34 +100,13 @@ abstract class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getConstraints()
+    public function getOptions()
     {
-        return $this->constraints;
+        return $this->options;
     }
 
     /**
      * {@inheritdoc}
-     */
-    public function addConstraint(ConstraintInterface $constraint)
-    {
-        $this->constraints->add($constraint);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeConstraint(ConstraintInterface $constraint)
-    {
-        $this->constraints->removeElement($constraint);
-
-        return $this;
-    }
-
-    /**
-     * @param boolean $enabled
-     * @return Field
      */
     public function setEnabled($enabled)
     {
@@ -145,10 +116,28 @@ abstract class Field implements FieldInterface
     }
 
     /**
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }

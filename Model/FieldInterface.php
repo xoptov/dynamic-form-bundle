@@ -43,25 +43,35 @@ interface FieldInterface
     public function getPriority();
 
     /**
-     * @param ConstraintInterface[] $constraints
+     * @param array $options
      * @return FieldInterface
      */
-    public function setConstraints(array $constraints);
+    public function setOptions(array $options);
 
     /**
-     * @return ConstraintInterface[]
+     * @return array
      */
-    public function getConstraints();
+    public function getOptions();
 
     /**
-     * @param ConstraintInterface $constraint
+     * @param boolean $enabled
      * @return FieldInterface
      */
-    public function addConstraint(ConstraintInterface $constraint);
+    public function setEnabled($enabled);
 
     /**
-     * @param ConstraintInterface $constraint
+     * @return boolean
+     */
+    public function isEnabled();
+
+    /**
+     * @param mixed $value
      * @return FieldInterface
      */
-    public function removeConstraint(ConstraintInterface $constraint);
+    public function setValue($value);
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
 }

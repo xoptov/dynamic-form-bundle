@@ -2,9 +2,6 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-/**
- * @method void setValue($value)
- */
 abstract class ObjectProperty implements ObjectPropertyInterface
 {
     /** @var string */
@@ -23,8 +20,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     protected $priority;
 
     /**
-     * @param string $type
-     * @return ObjectProperty
+     * {@inheritdoc}
      */
     public function setType($type)
     {
@@ -34,7 +30,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -42,8 +38,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @param ObjectInterface $object
-     * @return ObjectProperty
+     * {@inheritdoc}
      */
     public function setObject(ObjectInterface $object)
     {
@@ -53,7 +48,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @return ObjectInterface
+     * {@inheritdoc}
      */
     public function getObject()
     {
@@ -61,8 +56,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @param PropertyInterface $property
-     * @return ObjectProperty
+     * {@inheritdoc}
      */
     public function setProperty(PropertyInterface $property)
     {
@@ -72,7 +66,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @return PropertyInterface
+     * {@inheritdoc}
      */
     public function getProperty()
     {
@@ -80,7 +74,17 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getValue()
     {
@@ -88,8 +92,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @param int $priority
-     * @return ObjectProperty
+     * {@inheritdoc}
      */
     public function setPriority($priority)
     {
@@ -99,7 +102,7 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getPriority()
     {

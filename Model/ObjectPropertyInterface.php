@@ -5,6 +5,17 @@ namespace Xoptov\DynamicFormBundle\Model;
 interface ObjectPropertyInterface
 {
     /**
+     * @param string $type
+     * @return ObjectPropertyInterface
+     */
+    public function setType($type);
+
+    /**
+     * @return mixed
+     */
+    public function getType();
+
+    /**
      * @param ObjectInterface $object
      * @return ObjectPropertyInterface
      */
@@ -36,4 +47,15 @@ interface ObjectPropertyInterface
      * @return int
      */
     public function getPriority();
+
+    /**
+     * @param mixed $value
+     * @return ObjectPropertyInterface
+     */
+    public function setValue($value);
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
 }
