@@ -2,9 +2,11 @@
 
 namespace Xoptov\DynamicFormBundle\Service;
 
+use Xoptov\DynamicFormBundle\Model\Field;
+use Xoptov\DynamicFormBundle\Model\Filter;
 use Xoptov\DynamicFormBundle\Model\FormInterface;
 
-class FormManager
+class FilterManager
 {
     /**
      * @param FormInterface $form
@@ -23,5 +25,26 @@ class FormManager
         }
 
         return;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @return Filter
+     */
+    public function createFilterModel(FormInterface $form)
+    {
+        $fields = new \SplObjectStorage();
+        $this->inheritFields($form, $fields);
+
+        $filter = new Filter();
+
+        /** @var Field $field */
+        foreach ($fields as $field) {
+            if ($field->isEnabled()) {
+                $filter->appendField($field);
+            }
+        }
+
+        return $filter;
     }
 }

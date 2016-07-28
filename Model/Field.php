@@ -2,7 +2,7 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-abstract class Field implements FieldInterface
+class Field implements FieldInterface
 {
     /** @var mixed */
     protected $id;
