@@ -7,7 +7,7 @@
     <services>
 
         <service id="xdf.filter_type.subscriber" class="Xoptov\DynamicFormBundle\Form\EventListener\FilterTypeSubscriber">
-            <argument type="service" id="xdf.form.manager"/>
+            <argument type="service" id="xdf.filter.manager"/>
         </service>
 
         <service id="xdf.form.filter_type" class="Xoptov\DynamicFormBundle\Form\Type\FilterType">
@@ -15,7 +15,7 @@
             <tag name="form.type"/>
         </service>
 
-        <service id="xdf.form.manager" class="Xoptov\DynamicFormBundle\Service\FormManager"/>
+        <service id="xdf.filter.manager" class="Xoptov\DynamicFormBundle\Service\FilterManager"/>
 
     </services>
 

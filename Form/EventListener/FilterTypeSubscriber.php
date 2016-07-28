@@ -11,23 +11,22 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface as BaseFormInterface;
 use Xoptov\DynamicFormBundle\Form\Type\FieldCollectionType;
 use Xoptov\DynamicFormBundle\Model\Field;
-use Xoptov\DynamicFormBundle\Model\FormInterface;
+use Xoptov\DynamicFormBundle\Model\Filter;
 use Xoptov\DynamicFormBundle\Model\Measure;
 use Xoptov\DynamicFormBundle\Model\Property;
-use Xoptov\DynamicFormBundle\Service\FormManager;
 
 class FilterTypeSubscriber implements EventSubscriberInterface
 {
-    /** @var FormManager */
-    protected $formManager;
+    /** @var boolean */
+    protected $deleteEmpty;
 
     /**
      * FilterTypeSubscriber constructor.
-     * @param FormManager $formManager
+     * @param bool $deleteEmpty
      */
-    public function __construct(FormManager $formManager)
+    public function __construct($deleteEmpty = false)
     {
-        $this->formManager = $formManager;
+        $this->deleteEmpty = $deleteEmpty;
     }
 
     /**
@@ -37,7 +36,6 @@ class FilterTypeSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_SUBMIT => 'preSubmit',
             FormEvents::SUBMIT => array('onSubmit', 50),
         );
     }
@@ -47,20 +45,14 @@ class FilterTypeSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
-        /** @var Form $form */
         $form = $event->getForm();
-
-        /** @var FormInterface $data */
         $data = $event->getData();
 
-        if (!$data instanceof FormInterface) {
-            throw new UnexpectedTypeException($data, 'Xoptov\\DynamicFormBundle\\Model\\FormInterface');
+        if (!$data instanceof Filter) {
+            throw new UnexpectedTypeException($data, 'Xoptov\\DynamicFormBundle\\Model\\Filter');
         }
 
-        $fields = new \SplObjectStorage();
-        $this->formManager->inheritFields($data, $fields);
-
-        if (count($fields)) {
+        if (count($data->getFields())) {
             $form->add('fields', FieldCollectionType::class, array(
                 'label' => 'Фильтр',
                 'required' => false
@@ -68,12 +60,17 @@ class FilterTypeSubscriber implements EventSubscriberInterface
             $fieldsCollection = $form->get('fields');
 
             /** @var Field $field */
-            foreach ($fields as $field) {
+            foreach ($data->getFields() as $key => $field) {
+                // Hide disabled fields
+                if ($field->isEnabled() == false) {
+                    continue;
+                }
+
                 /** @var Property $property */
                 $property = $field->getProperty();
 
                 $options = array(
-                    'property_path' => sprintf("[%s]", $field->getId()),
+                    'property_path' => sprintf("[%s].value", $key),
                     'required' => false
                 );
 
@@ -93,7 +90,7 @@ class FilterTypeSubscriber implements EventSubscriberInterface
                 }
 
                 /** @var BaseFormInterface $fieldsCollection */
-                $fieldsCollection->add($field->getId(), $field->getClass(), array_replace($options, $field->getOptions()));
+                $fieldsCollection->add($key, $field->getClass(), array_replace($options, $field->getOptions()));
             }
         }
     }
@@ -101,16 +98,24 @@ class FilterTypeSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
-    {
-        xdebug_break();
-    }
-
-    /**
-     * @param FormEvent $event
-     */
     public function onSubmit(FormEvent $event)
     {
-        xdebug_break();
+        $form = $event->getForm();
+        $data = $event->getData();
+
+        if (!$data instanceof Filter) {
+            throw new UnexpectedTypeException($data, 'Xoptov\\DynamicFormBundle\\Model\\Filter');
+        }
+
+        if ($this->deleteEmpty) {
+            $fields = $form->get('fields');
+            foreach ($fields as $key => $child) {
+                if ($child->isEmpty()) {
+                    $data->removeField($key);
+                }
+            }
+        }
+
+        $event->setData($data);
     }
 }
