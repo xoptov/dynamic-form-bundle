@@ -4,7 +4,7 @@ namespace Xoptov\DynamicFormBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-abstract class Form implements FormInterface
+abstract class Form implements FormInterface, \ArrayAccess
 {
     /** @var mixed */
     protected $id;
@@ -108,5 +108,57 @@ abstract class Form implements FormInterface
     public function getFields()
     {
         return $this->fields;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset)
+    {
+        foreach ($this->fields as $field) {
+            if ($field->getId() == $offset) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset)
+    {
+        foreach ($this->fields as $field) {
+            if ($field->getId() == $offset) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($offset, $value)
+    {
+        foreach ($this->fields as $key => $field) {
+            if ($field->getId() == $offset) {
+                $this->fields[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($offset)
+    {
+        foreach ($this->fields as $key => $field) {
+            if ($field->getId() == $offset) {
+                unset($this->fields[$key]);
+            }
+        }
     }
 }

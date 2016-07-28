@@ -6,12 +6,8 @@
         <field name="id" type="string" id="true" strategy="AUTO"/>
         <field name="class" type="string"/>
         <field name="priority" type="integer"/>
+        <field name="options" type="collection"/>
         <field name="enabled" type="boolean"/>
-        <embed-many target-document="Xoptov\DynamicFormBundle\Model\ConstraintInterface" field="constraints"/>
-        <reference-one target-document="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
-            <cascade>
-                <persist/>
-            </cascade>
-        </reference-one>
+        <reference-one target-document="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property"/>
     </mapped-superclass>
 </doctrine-mongo-mapping>

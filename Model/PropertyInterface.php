@@ -30,4 +30,15 @@ interface PropertyInterface
      * @return MeasureInterface
      */
     public function getMeasure();
+
+    /**
+     * @param array $values
+     * @return PropertyInterface
+     */
+    public function setValues(array $values);
+
+    /**
+     * @return array
+     */
+    public function getValues();
 }
