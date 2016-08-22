@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Property implements PropertyInterface
 {
     /** @var mixed */
@@ -13,8 +15,16 @@ abstract class Property implements PropertyInterface
     /** @var MeasureInterface */
     protected $measure;
 
-    /** @var array */
+    /** @var ValueInterface[] */
     protected $values;
+
+    /**
+     * Property constructor.
+     */
+    public function __construct()
+    {
+        $this->values = new ArrayCollection();
+    }
 
     /**
      * @return mixed

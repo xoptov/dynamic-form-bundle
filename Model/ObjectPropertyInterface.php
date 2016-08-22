@@ -49,13 +49,13 @@ interface ObjectPropertyInterface
     public function getPriority();
 
     /**
-     * @param mixed $value
+     * @param ValueInterface[] $values
      * @return ObjectPropertyInterface
      */
-    public function setValue($value);
+    public function setValues(array $values);
 
     /**
-     * @return mixed
+     * @return ValueInterface[]
      */
-    public function getValue();
+    public function getValues();
 }

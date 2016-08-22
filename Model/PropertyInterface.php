@@ -32,13 +32,13 @@ interface PropertyInterface
     public function getMeasure();
 
     /**
-     * @param array $values
+     * @param ValueInterface[] $values
      * @return PropertyInterface
      */
     public function setValues(array $values);
 
     /**
-     * @return array
+     * @return ValueInterface[]
      */
     public function getValues();
 }
