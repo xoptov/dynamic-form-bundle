@@ -1,6 +1,6 @@
 <?php
 
-namespace Xoptov\DynamicFormBundle\Document;
+namespace Xoptov\DynamicFormBundle\Entity;
 
 use Xoptov\DynamicFormBundle\Model\Field as BaseField;
 

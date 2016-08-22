@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class ObjectProperty implements ObjectPropertyInterface
 {
     /** @var string */
@@ -13,11 +15,19 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     /** @var PropertyInterface */
     protected $property;
 
-    /** @var mixed */
-    protected $value;
+    /** @var ValueInterface[] */
+    protected $values;
 
     /** @var int */
     protected $priority;
+
+    /**
+     * ObjectProperty constructor.
+     */
+    public function __construct()
+    {
+        $this->values = new ArrayCollection();
+    }
 
     /**
      * {@inheritdoc}
@@ -76,9 +86,9 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     /**
      * {@inheritdoc}
      */
-    public function setValue($value)
+    public function setValues(array $values)
     {
-        $this->value = $value;
+        $this->values = $values;
 
         return $this;
     }
@@ -86,9 +96,9 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     /**
      * {@inheritdoc}
      */
-    public function getValue()
+    public function getValues()
     {
-        return $this->value;
+        return $this->values;
     }
 
     /**
