@@ -21,17 +21,6 @@ interface FormInterface
     public function getParent();
 
     /**
-     * @param string $type
-     * @return FormInterface
-     */
-    public function setType($type);
-
-    /**
-     * @return string
-     */
-    public function getType();
-
-    /**
      * @param string $name
      * @return FormInterface
      */
