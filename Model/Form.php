@@ -10,9 +10,6 @@ abstract class Form implements FormInterface, \ArrayAccess
     protected $id;
 
     /** @var string */
-    protected $type;
-
-    /** @var string */
     protected $name;
 
     /** @var FormInterface */
@@ -35,24 +32,6 @@ abstract class Form implements FormInterface, \ArrayAccess
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**

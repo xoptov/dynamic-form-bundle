@@ -10,6 +10,5 @@
             </options>
         </id>
         <field name="name" column="name" type="string"/>
-        <field name="type" column="type" type="string"/>
     </mapped-superclass>
 </doctrine-mapping>

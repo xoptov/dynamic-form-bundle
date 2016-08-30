@@ -13,7 +13,7 @@ abstract class ObjectProperty extends BaseObjectProperty
      * @param int $id
      * @return ObjectProperty
      */
-    public function setId($id): self
+    public function setId($id)
     {
         $this->id = $id;
 

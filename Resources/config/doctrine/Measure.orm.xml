@@ -9,7 +9,7 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
-        <field name="name" column="name" type="string"/>
-        <field name="label" column="label" type="string"/>
+        <field name="name" column="name" type="string" length="30"/>
+        <field name="label" column="label" type="string" length="10"/>
     </mapped-superclass>
 </doctrine-mapping>
