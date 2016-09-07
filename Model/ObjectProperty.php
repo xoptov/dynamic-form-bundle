@@ -6,9 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 abstract class ObjectProperty implements ObjectPropertyInterface
 {
-    /** @var string */
-    protected $type;
-
     /** @var ObjectInterface */
     protected $object;
 
@@ -27,24 +24,6 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     public function __construct()
     {
         $this->values = new ArrayCollection();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**

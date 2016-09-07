@@ -2,10 +2,13 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-class Field implements FieldInterface
+abstract class Field implements FieldInterface
 {
     /** @var mixed */
     protected $id;
+
+    /** @var string */
+    protected $name;
 
     /** @var string */
     protected $class;
@@ -17,7 +20,7 @@ class Field implements FieldInterface
     protected $priority;
 
     /** @var array */
-    protected $options = array();
+    protected $options;
 
     /** @var boolean */
     protected $enabled;
@@ -31,6 +34,24 @@ class Field implements FieldInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
