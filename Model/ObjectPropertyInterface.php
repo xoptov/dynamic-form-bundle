@@ -5,17 +5,6 @@ namespace Xoptov\DynamicFormBundle\Model;
 interface ObjectPropertyInterface
 {
     /**
-     * @param string $type
-     * @return ObjectPropertyInterface
-     */
-    public function setType($type);
-
-    /**
-     * @return mixed
-     */
-    public function getType();
-
-    /**
      * @param ObjectInterface $object
      * @return ObjectPropertyInterface
      */

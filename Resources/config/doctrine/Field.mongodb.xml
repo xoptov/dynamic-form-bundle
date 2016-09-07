@@ -4,6 +4,7 @@
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <mapped-superclass name="Xoptov\DynamicFormBundle\Document\Field">
         <field name="id" type="string" id="true" strategy="AUTO"/>
+        <field name="name" type="string"/>
         <field name="class" type="string"/>
         <field name="priority" type="integer"/>
         <field name="options" type="collection"/>

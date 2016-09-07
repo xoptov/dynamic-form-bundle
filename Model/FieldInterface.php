@@ -10,6 +10,17 @@ interface FieldInterface
     public function getId();
 
     /**
+     * @param string $name
+     * @return FieldInterface
+     */
+    public function setName($name);
+
+    /**
+     * @return string
+     */
+    public function getName();
+
+    /**
      * @param string $class
      * @return FieldInterface
      */

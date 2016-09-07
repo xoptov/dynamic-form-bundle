@@ -9,6 +9,7 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
+        <field name="name" column="name" type="string"/>
         <field name="class" column="class" type="string"/>
         <field name="priority" column="priority" type="integer">
             <options>
@@ -16,7 +17,6 @@
             </options>
         </field>
         <field name="options" column="options" type="array"/>
-        <field name="enabled" column="enabled" type="boolean"/>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
             <join-column name="property_id" referenced-column-name="id"/>
         </many-to-one>
