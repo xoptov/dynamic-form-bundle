@@ -2,8 +2,6 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 abstract class ObjectProperty implements ObjectPropertyInterface
 {
     /** @var ObjectInterface */
@@ -12,19 +10,20 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     /** @var PropertyInterface */
     protected $property;
 
-    /** @var ValueInterface[] */
-    protected $values;
+    /** @var bool */
+    protected $valueBoolean;
+
+    /** @var float */
+    protected $valueFloat;
+
+    /** @var string */
+    protected $valueString;
+
+    /** @var array */
+    protected $valueCollection = array();
 
     /** @var int */
     protected $priority;
-
-    /**
-     * ObjectProperty constructor.
-     */
-    public function __construct()
-    {
-        $this->values = new ArrayCollection();
-    }
 
     /**
      * {@inheritdoc}
@@ -65,19 +64,86 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     /**
      * {@inheritdoc}
      */
-    public function setValues(array $values)
+    public function setValueBoolean($value)
     {
-        $this->values = $values;
-
-        return $this;
+        $this->eraseValues();
+        $this->valueBoolean = $value;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getValues()
+    public function setValueFloat($value)
     {
-        return $this->values;
+        $this->eraseValues();
+        $this->valueFloat = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setValueString($value)
+    {
+        $this->eraseValues();
+        $this->valueString = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setValueCollection(array $values)
+    {
+        $this->eraseValues();
+        $this->valueCollection = $values;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setValue($value)
+    {
+        if (null == $value) {
+            return false;
+        }
+
+        $values = explode(',', $value);
+
+        if (count($values) > 1) {
+            $this->setValueCollection($values);
+        } elseif (0 === intval($value) || 1 === intval($value)) {
+            $this->setValueBoolean($value);
+        } elseif (floatval($value)) {
+            $this->setValueFloat(floatval($value));
+        } else {
+            $this->setValueString($value);
+        }
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getValue()
+    {
+        if (count($this->valueCollection) > 0) {
+            return $this->valueCollection;
+        } elseif (null !== $this->valueBoolean) {
+            return $this->valueBoolean;
+        } elseif (null !== $this->valueFloat) {
+            return $this->valueFloat;
+        } elseif (null !== $this->valueString) {
+            return $this->valueString;
+        } else {
+            return null;
+        }
+    }
+
+    protected function eraseValues()
+    {
+        $this->valueFloat = null;
+        $this->valueString = null;
+        $this->valueCollection = array();
     }
 
     /**
