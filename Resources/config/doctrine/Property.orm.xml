@@ -13,15 +13,5 @@
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\MeasureInterface" field="measure">
             <join-column name="measure_id" referenced-column-name="id"/>
         </many-to-one>
-        <many-to-many target-entity="Xoptov\DynamicFormBundle\Model\ValueInterface" field="values">
-            <join-table name="properties_values">
-                <join-columns>
-                    <join-column name="property_id" referenced-column-name="id"/>
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="value_id" referenced-column-name="id"/>
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
     </mapped-superclass>
 </doctrine-mapping>

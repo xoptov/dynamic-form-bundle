@@ -15,17 +15,6 @@ abstract class Property implements PropertyInterface
     /** @var MeasureInterface */
     protected $measure;
 
-    /** @var ValueInterface[] */
-    protected $values;
-
-    /**
-     * Property constructor.
-     */
-    public function __construct()
-    {
-        $this->values = new ArrayCollection();
-    }
-
     /**
      * @return mixed
      */
@@ -68,23 +57,5 @@ abstract class Property implements PropertyInterface
     public function getMeasure()
     {
         return $this->measure;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setValues(array $values)
-    {
-        $this->values = $values;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getValues()
-    {
-        return $this->values;
     }
 }
