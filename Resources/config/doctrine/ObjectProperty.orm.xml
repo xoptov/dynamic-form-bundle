@@ -19,10 +19,10 @@
             </options>
         </field>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\ObjectInterface" field="object" inversed-by="properties">
-            <join-column name="object_id" referenced-column-name="id"/>
+            <join-column name="object_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
-            <join-column name="property_id" referenced-column-name="id"/>
+            <join-column name="property_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>
