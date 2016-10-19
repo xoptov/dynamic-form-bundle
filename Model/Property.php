@@ -2,8 +2,6 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 abstract class Property implements PropertyInterface
 {
     /** @var mixed */

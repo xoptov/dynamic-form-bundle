@@ -9,14 +9,14 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
-        <field name="name" column="name" type="string"/>
+        <field name="label" column="label" type="string" nullable="true"/>
         <field name="class" column="class" type="string"/>
         <field name="priority" column="priority" type="integer" nullable="true">
             <options>
                 <option name="unsigned">true</option>
             </options>
         </field>
-        <field name="options" column="options" type="array"/>
+        <field name="description" column="description" type="string" nullable="true"/>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
             <join-column name="property_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>

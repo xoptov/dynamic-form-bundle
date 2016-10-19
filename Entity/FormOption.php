@@ -2,11 +2,11 @@
 
 namespace Xoptov\DynamicFormBundle\Entity;
 
-use Xoptov\DynamicFormBundle\Model\ObjectProperty as BaseObjectProperty;
+use Xoptov\DynamicFormBundle\Model\FormOption as BaseFormOption;
 
-abstract class ObjectProperty extends BaseObjectProperty
+abstract class FormOption extends BaseFormOption
 {
-    /** @var integer */
+    /** @var int */
     private $id;
 
     /**

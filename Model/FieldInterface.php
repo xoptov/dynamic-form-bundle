@@ -10,15 +10,15 @@ interface FieldInterface
     public function getId();
 
     /**
-     * @param string $name
+     * @param string $label
      * @return FieldInterface
      */
-    public function setName($name);
+    public function setLabel($label);
 
     /**
      * @return string
      */
-    public function getName();
+    public function getLabel();
 
     /**
      * @param string $class
@@ -54,21 +54,21 @@ interface FieldInterface
     public function getPriority();
 
     /**
-     * @param array $options
+     * @param string $description
      * @return FieldInterface
      */
-    public function setOptions(array $options);
+    public function setDescription($description);
 
     /**
-     * @return array
+     * @return string
      */
-    public function getOptions();
+    public function getDescription();
 
     /**
-     * @param boolean $enabled
+     * @param boolean $value
      * @return FieldInterface
      */
-    public function setEnabled($enabled);
+    public function setEnabled($value);
 
     /**
      * @return boolean

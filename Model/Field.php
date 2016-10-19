@@ -2,13 +2,15 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-abstract class Field implements FieldInterface
+abstract class Field implements FieldInterface, OptionsAwareInterface
 {
+    use OptionsAwareTrait;
+
     /** @var mixed */
     protected $id;
 
     /** @var string */
-    protected $name;
+    protected $label;
 
     /** @var string */
     protected $class;
@@ -19,8 +21,8 @@ abstract class Field implements FieldInterface
     /** @var integer */
     protected $priority;
 
-    /** @var array */
-    protected $options;
+    /** @var string */
+    protected $description;
 
     /** @var boolean */
     protected $enabled;
@@ -39,19 +41,19 @@ abstract class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
+    public function setLabel($label)
     {
-        $this->name = $name;
+        $this->label = $label;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public function getName()
+    public function getLabel()
     {
-        return $this->name;
+        return $this->label;
     }
 
     /**
@@ -111,9 +113,9 @@ abstract class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function setOptions(array $options)
+    public function setDescription($description)
     {
-        $this->options = $options;
+        $this->description = $description;
 
         return $this;
     }
@@ -121,17 +123,17 @@ abstract class Field implements FieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getDescription()
     {
-        return $this->options;
+        return $this->description;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setEnabled($enabled)
+    public function setEnabled($value)
     {
-        $this->enabled = $enabled;
+        $this->enabled = $value;
 
         return $this;
     }

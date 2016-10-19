@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 interface FormInterface
 {
     /**
@@ -32,13 +34,25 @@ interface FormInterface
     public function getName();
 
     /**
-     * @param FieldInterface[] $fields
+     * @param Collection $fields
      * @return FormInterface
      */
-    public function setFields(array $fields);
+    public function setFields(Collection $fields);
 
     /**
      * @return FieldInterface[]
      */
     public function getFields();
+
+    /**
+     * @param FieldInterface $field
+     * @return boolean
+     */
+    public function addField(FieldInterface $field);
+
+    /**
+     * @param FieldInterface $field
+     * @return boolean
+     */
+    public function removeField(FieldInterface $field);
 }

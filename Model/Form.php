@@ -2,10 +2,12 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-abstract class Form implements FormInterface, \ArrayAccess
+abstract class Form implements FormInterface, OptionsAwareInterface
 {
+    use OptionsAwareTrait;
+
     /** @var mixed */
     protected $id;
 
@@ -15,16 +17,8 @@ abstract class Form implements FormInterface, \ArrayAccess
     /** @var FormInterface */
     protected $parent;
 
-    /** @var FieldInterface[] */
+    /** @var Collection */
     protected $fields;
-
-    /**
-     * Form constructor.
-     */
-    public function __construct()
-    {
-        $this->fields = new ArrayCollection();
-    }
 
     /**
      * {@inheritdoc}
@@ -53,8 +47,7 @@ abstract class Form implements FormInterface, \ArrayAccess
     }
 
     /**
-     * @param FormInterface $parent
-     * @return Form
+     * {@inheritdoc}
      */
     public function setParent(FormInterface $parent)
     {
@@ -64,7 +57,7 @@ abstract class Form implements FormInterface, \ArrayAccess
     }
 
     /**
-     * @return FormInterface
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -74,7 +67,7 @@ abstract class Form implements FormInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function setFields(array $fields)
+    public function setFields(Collection $fields)
     {
         $this->fields = $fields;
 
@@ -92,52 +85,16 @@ abstract class Form implements FormInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function addField(FieldInterface $field)
     {
-        foreach ($this->fields as $field) {
-            if ($field->getId() == $offset) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->fields->add($field);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function removeField(FieldInterface $field)
     {
-        foreach ($this->fields as $field) {
-            if ($field->getId() == $offset) {
-                return $field;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetSet($offset, $value)
-    {
-        foreach ($this->fields as $key => $field) {
-            if ($field->getId() == $offset) {
-                $this->fields[$key] = $value;
-            }
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetUnset($offset)
-    {
-        foreach ($this->fields as $key => $field) {
-            if ($field->getId() == $offset) {
-                unset($this->fields[$key]);
-            }
-        }
+        return $this->fields->removeElement($field);
     }
 }
