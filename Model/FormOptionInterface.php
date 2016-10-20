@@ -2,16 +2,52 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-interface FormOptionInterface extends OptionInterface
+use Doctrine\Common\Collections\Collection;
+
+interface FormOptionInterface
 {
     /**
-     * @param FormInterface $form
+     * @param OptionInterface $option
      * @return FormOptionInterface
      */
-    public function setForm(FormInterface $form);
+    public function setOption(OptionInterface $option);
 
     /**
-     * @return FormInterface
+     * @return OptionInterface
      */
-    public function getForm();
+    public function getOption();
+
+    /**
+     * @param mixed $value
+     * @return boolean
+     */
+    public function setValue($value);
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
+
+    /**
+     * @param Collection $children
+     * @return FormOptionInterface
+     */
+    public function setChildren(Collection $children);
+
+    /**
+     * @return Collection
+     */
+    public function getChildren();
+
+    /**
+     * @param FormOptionInterface $child
+     * @return boolean
+     */
+    public function addChildren(FormOptionInterface $child);
+
+    /**
+     * @param FormOptionInterface $child
+     * @return boolean
+     */
+    public function removeChildren(FormOptionInterface $child);
 }

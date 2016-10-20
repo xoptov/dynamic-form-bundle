@@ -53,7 +53,7 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * @param boolean|float|string|array $value
+     * @param mixed $value
      * @return boolean
      */
     public function setValue($value)
@@ -80,7 +80,7 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * @return boolean|float|string|array
+     * @return mixed
      */
     public function getValue()
     {

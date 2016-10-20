@@ -2,37 +2,23 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-
 abstract class Option implements OptionInterface
 {
-    use PolymorphicValueTrait;
-
-    /** @var OptionInterface */
-    protected $parent;
+    /** @var mixed */
+    protected $id;
 
     /** @var string */
     protected $name;
 
-    /** @var Collection */
-    protected $children;
+    /** @var string */
+    protected $description;
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
-    public function setParent(OptionInterface $option)
+    public function getId()
     {
-        $this->parent = $option;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
-    {
-        return $this->parent;
+        return $this->id;
     }
 
     /**
@@ -56,9 +42,9 @@ abstract class Option implements OptionInterface
     /**
      * {@inheritdoc}
      */
-    public function setChildren(Collection $children)
+    public function setDescription($description)
     {
-        $this->children = $children;
+        $this->description = $description;
 
         return $this;
     }
@@ -66,24 +52,8 @@ abstract class Option implements OptionInterface
     /**
      * {@inheritdoc}
      */
-    public function getChildren()
+    public function getDescription()
     {
-        return $this->children;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addChildren(OptionInterface $option)
-    {
-        return $this->children->add($option);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeChildren(OptionInterface $option)
-    {
-        return $this->children->removeElement($option);
+        return $this->description;
     }
 }

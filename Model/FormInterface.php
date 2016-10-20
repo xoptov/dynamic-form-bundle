@@ -34,25 +34,103 @@ interface FormInterface
     public function getName();
 
     /**
-     * @param Collection $fields
+     * @param string $class
      * @return FormInterface
      */
-    public function setFields(Collection $fields);
+    public function setClass($class);
 
     /**
-     * @return FieldInterface[]
+     * @return string
      */
-    public function getFields();
+    public function getClass();
 
     /**
-     * @param FieldInterface $field
+     * @param string $description
+     * @return FormInterface
+     */
+    public function setDescription($description);
+
+    /**
+     * @return string
+     */
+    public function getDescription();
+
+    /**
+     * @param PropertyInterface $property
+     * @return FormInterface
+     */
+    public function setProperty(PropertyInterface $property);
+
+    /**
+     * @return PropertyInterface
+     */
+    public function getProperty();
+
+    /**
+     * @param int $priority
+     * @return FormInterface
+     */
+    public function setPriority($priority);
+
+    /**
+     * @return int
+     */
+    public function getPriority();
+
+    /**
+     * @param Collection $options
+     * @return FormInterface
+     */
+    public function setOptions(Collection $options);
+
+    /**
+     * @return Collection
+     */
+    public function getOptions();
+
+    /**
+     * @param FormOptionInterface $option
      * @return boolean
      */
-    public function addField(FieldInterface $field);
+    public function addOption(FormOptionInterface $option);
 
     /**
-     * @param FieldInterface $field
+     * @param FormOptionInterface $option
      * @return boolean
      */
-    public function removeField(FieldInterface $field);
+    public function removeOption(FormOptionInterface $option);
+
+    /**
+     * @param Collection $children
+     * @return FormInterface
+     */
+    public function setChildren(Collection $children);
+
+    /**
+     * @return Collection
+     */
+    public function getChildren();
+
+    /**
+     * @param FormInterface $child
+     * @return boolean
+     */
+    public function addChildren(FormInterface $child);
+
+    /**
+     * @param FormInterface $child
+     * @return boolean
+     */
+    public function removeChildren(FormInterface $child);
+
+    /**
+     * @param boolean $value
+     * @return FormInterface
+     */
+    public function setEnabled($value);
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled();
 }

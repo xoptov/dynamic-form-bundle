@@ -2,20 +2,12 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-
 interface OptionInterface
 {
     /**
-     * @param OptionInterface $option
-     * @return OptionInterface
+     * @return mixed
      */
-    public function setParent(OptionInterface $option);
-
-    /**
-     * @return OptionInterface
-     */
-    public function getParent();
+    public function getId();
 
     /**
      * @param string $name
@@ -29,36 +21,13 @@ interface OptionInterface
     public function getName();
 
     /**
-     * @param boolean|float|string|array $value
-     * @return mixed
-     */
-    public function setValue($value);
-
-    /**
-     * @return boolean|float|string|array
-     */
-    public function getValue();
-
-    /**
-     * @param Collection $children
+     * @param string $description
      * @return OptionInterface
      */
-    public function setChildren(Collection $children);
+    public function setDescription($description);
 
     /**
-     * @return Collection
+     * @return string
      */
-    public function getChildren();
-
-    /**
-     * @param OptionInterface $option
-     * @return boolean
-     */
-    public function addChildren(OptionInterface $option);
-
-    /**
-     * @param OptionInterface $option
-     * @return boolean
-     */
-    public function removeChildren(OptionInterface $option);
+    public function getDescription();
 }

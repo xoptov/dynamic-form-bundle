@@ -9,16 +9,15 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
-        <field name="name" column="name" type="string"/>
         <field name="valueBoolean" column="value_boolean" type="boolean" nullable="true"/>
         <field name="valueFloat" column="value_float" type="float" nullable="true"/>
         <field name="valueString" column="value_string" type="string" nullable="true"/>
         <field name="valueSet" column="value_set" type="array" nullable="true"/>
-        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FormOptionInterface" field="parent" inversed-by="children">
-            <join-column name="parent_id" referenced-column-name="id"/>
-        </many-to-one>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FormInterface" field="form" inversed-by="options">
-            <join-column name="form_id" referenced-column-name="id"/>
+            <join-column name="form_type_id" referenced-column-name="id"/>
+        </many-to-one>
+        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\OptionInterface" field="option">
+            <join-column name="option_id" referenced-column-name="id"/>
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

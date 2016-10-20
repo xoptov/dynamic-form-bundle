@@ -2,17 +2,24 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-abstract class FormOption extends Option implements FormOptionInterface
+use Doctrine\Common\Collections\Collection;
+
+abstract class FormOption implements FormOptionInterface
 {
-    /** @var FormInterface */
-    protected $form;
+    use PolymorphicValueTrait;
+
+    /** @var OptionInterface */
+    protected $option;
+
+    /** @var Collection */
+    protected $children;
 
     /**
      * {@inheritdoc}
      */
-    public function setForm(FormInterface $form)
+    public function setOption(OptionInterface $option)
     {
-        $this->form = $form;
+        $this->option = $option;
 
         return $this;
     }
@@ -20,8 +27,42 @@ abstract class FormOption extends Option implements FormOptionInterface
     /**
      * {@inheritdoc}
      */
-    public function getForm()
+    public function getOption()
     {
-        return $this->form;
+        return $this->option;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setChildren(Collection $children)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addChildren(FormOptionInterface $child)
+    {
+        return $this->children->add($child);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeChildren(FormOptionInterface $child)
+    {
+        return $this->children->removeElement($child);
     }
 }

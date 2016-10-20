@@ -2,23 +2,14 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
-    <mapped-superclass name="Xoptov\DynamicFormBundle\Entity\Field">
+    <mapped-superclass name="Xoptov\DynamicFormBundle\Entity\Option">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
             <options>
                 <option name="unsigned">true</option>
             </options>
         </id>
-        <field name="label" column="label" type="string" nullable="true"/>
-        <field name="class" column="class" type="string"/>
-        <field name="priority" column="priority" type="integer" nullable="true">
-            <options>
-                <option name="unsigned">true</option>
-            </options>
-        </field>
+        <field name="name" column="name" type="string"/>
         <field name="description" column="description" type="string" nullable="true"/>
-        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
-            <join-column name="property_id" referenced-column-name="id" nullable="false"/>
-        </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

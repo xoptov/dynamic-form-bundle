@@ -4,21 +4,37 @@ namespace Xoptov\DynamicFormBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 
-abstract class Form implements FormInterface, OptionsAwareInterface
+abstract class Form implements FormInterface
 {
-    use OptionsAwareTrait;
-
     /** @var mixed */
     protected $id;
-
-    /** @var string */
-    protected $name;
 
     /** @var FormInterface */
     protected $parent;
 
+    /** @var string */
+    protected $name;
+
+    /** @var string */
+    protected $class;
+
+    /** @var string */
+    protected $description;
+
+    /** @var PropertyInterface */
+    protected $property;
+
+    /** @var int */
+    protected $priority;
+
     /** @var Collection */
-    protected $fields;
+    protected $options;
+
+    /** @var Collection */
+    protected $children;
+
+    /** @var boolean */
+    protected $enabled;
 
     /**
      * {@inheritdoc}
@@ -26,6 +42,25 @@ abstract class Form implements FormInterface, OptionsAwareInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param FormInterface $parent
+     * @return Form
+     */
+    public function setParent(FormInterface $parent)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return FormInterface
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**
@@ -49,9 +84,27 @@ abstract class Form implements FormInterface, OptionsAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function setParent(FormInterface $parent)
+    public function setClass($class)
     {
-        $this->parent = $parent;
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -59,17 +112,17 @@ abstract class Form implements FormInterface, OptionsAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getDescription()
     {
-        return $this->parent;
+        return $this->description;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setFields(Collection $fields)
+    public function setProperty(PropertyInterface $property)
     {
-        $this->fields = $fields;
+        $this->property = $property;
 
         return $this;
     }
@@ -77,24 +130,112 @@ abstract class Form implements FormInterface, OptionsAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function getFields()
+    public function getProperty()
     {
-        return $this->fields;
+        return $this->property;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addField(FieldInterface $field)
+    public function getPriority()
     {
-        return $this->fields->add($field);
+        return $this->priority;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function removeField(FieldInterface $field)
+    public function setPriority($priority)
     {
-        return $this->fields->removeElement($field);
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setOptions(Collection $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addOption(FormOptionInterface $option)
+    {
+        return $this->options->add($option);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeOption(FormOptionInterface $option)
+    {
+        return $this->options->removeElement($option);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setChildren(Collection $children)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addChildren(FormInterface $child)
+    {
+        return $this->children->add($child);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeChildren(FormInterface $child)
+    {
+        return $this->children->removeElement($child);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setEnabled($value)
+    {
+        $this->enabled = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 }
