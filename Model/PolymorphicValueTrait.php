@@ -14,10 +14,10 @@ trait PolymorphicValueTrait
     protected $valueString;
 
     /** @var array */
-    protected $valueArray = array();
+    protected $valueSet = array();
 
     /**
-     * {@inheritdoc}
+     * @param boolean $value
      */
     public function setValueBoolean($value)
     {
@@ -26,7 +26,7 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param float $value
      */
     public function setValueFloat($value)
     {
@@ -35,7 +35,7 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $value
      */
     public function setValueString($value)
     {
@@ -44,27 +44,30 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $values
      */
-    public function setValueArray(array $values)
+    public function setValueSet(array $values)
     {
         $this->eraseValues();
-        $this->valueCollection = $values;
+        $this->valueSet = $values;
     }
 
     /**
-     * {@inheritdoc}
+     * @param boolean|float|string|array $value
+     * @return boolean
      */
     public function setValue($value)
     {
         if (null == $value) {
+            $this->eraseValues();
+
             return false;
         }
 
         $values = explode(',', $value);
 
         if (count($values) > 1) {
-            $this->setValueArray($values);
+            $this->setValueSet($values);
         } elseif (0 === intval($value) || 1 === intval($value)) {
             $this->setValueBoolean($value);
         } elseif (floatval($value)) {
@@ -77,12 +80,12 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return boolean|float|string|array
      */
     public function getValue()
     {
-        if (count($this->valueArray) > 0) {
-            return $this->valueArray;
+        if (count($this->valueSet) > 0) {
+            return $this->valueSet;
         } elseif (null !== $this->valueBoolean) {
             return $this->valueBoolean;
         } elseif (null !== $this->valueFloat) {
@@ -99,6 +102,6 @@ trait PolymorphicValueTrait
         $this->valueBoolean = null;
         $this->valueFloat = null;
         $this->valueString = null;
-        $this->valueArray = array();
+        $this->valueSet = array();
     }
 }

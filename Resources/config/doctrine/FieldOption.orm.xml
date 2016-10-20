@@ -13,7 +13,7 @@
         <field name="valueBoolean" column="value_boolean" type="boolean" nullable="true"/>
         <field name="valueFloat" column="value_float" type="float" nullable="true"/>
         <field name="valueString" column="value_string" type="string" nullable="true"/>
-        <field name="valueArray" column="values" type="array" nullable="true"/>
+        <field name="valueSet" column="value_set" type="array" nullable="true"/>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FieldOptionInterface" field="parent" inversed-by="children">
             <join-column name="parent_id" referenced-column-name="id"/>
         </many-to-one>

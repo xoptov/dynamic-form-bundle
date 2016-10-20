@@ -29,31 +29,13 @@ interface OptionInterface
     public function getName();
 
     /**
-     * @param boolean $value
-     * @return OptionInterface
-     */
-    public function setValueBoolean($value);
-
-    /**
-     * @param float $value
-     * @return OptionInterface
-     */
-    public function setValueFloat($value);
-
-    /**
-     * @param string $value
-     * @return OptionInterface
-     */
-    public function setValueString($value);
-
-    /**
-     * @param array $values
-     * @return OptionInterface
-     */
-    public function setValueArray(array $values);
-
-    /**
+     * @param boolean|float|string|array $value
      * @return mixed
+     */
+    public function setValue($value);
+
+    /**
+     * @return boolean|float|string|array
      */
     public function getValue();
 
