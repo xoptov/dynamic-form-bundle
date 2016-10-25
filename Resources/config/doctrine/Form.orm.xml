@@ -9,9 +9,21 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
+        <field name="type" column="type" type="string"/>
         <field name="name" column="name" type="string"/>
-        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FormInterface" field="parent">
+        <field name="class" column="class" type="string" nullable="true"/>
+        <field name="description" column="description" type="string" nullable="true"/>
+        <field name="priority" column="priority" type="smallint" nullable="true">
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </field>
+        <field name="enabled" column="enabled" type="boolean"/>
+        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FormInterface" field="parent" inversed-by="children">
             <join-column name="parent_id" referenced-column-name="id"/>
+        </many-to-one>
+        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
+            <join-column name="property_id" referenced-column-name="id"/>
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

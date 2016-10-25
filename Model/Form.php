@@ -2,29 +2,42 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-abstract class Form implements FormInterface, \ArrayAccess
+abstract class Form implements FormInterface
 {
     /** @var mixed */
     protected $id;
 
     /** @var string */
-    protected $name;
+    protected $type = self::TYPE_FORM;
 
     /** @var FormInterface */
     protected $parent;
 
-    /** @var FieldInterface[] */
-    protected $fields;
+    /** @var string */
+    protected $name;
 
-    /**
-     * Form constructor.
-     */
-    public function __construct()
-    {
-        $this->fields = new ArrayCollection();
-    }
+    /** @var string */
+    protected $class;
+
+    /** @var string */
+    protected $description;
+
+    /** @var PropertyInterface */
+    protected $property;
+
+    /** @var int */
+    protected $priority;
+
+    /** @var Collection */
+    protected $options;
+
+    /** @var Collection */
+    protected $children;
+
+    /** @var boolean */
+    protected $enabled;
 
     /**
      * {@inheritdoc}
@@ -35,21 +48,22 @@ abstract class Form implements FormInterface, \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $type
+     * @return Form
      */
-    public function setName($name)
+    public function setType($type)
     {
-        $this->name = $name;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public function getName()
+    public function getType()
     {
-        return $this->name;
+        return $this->type;
     }
 
     /**
@@ -74,9 +88,9 @@ abstract class Form implements FormInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function setFields(array $fields)
+    public function setName($name)
     {
-        $this->fields = $fields;
+        $this->name = $name;
 
         return $this;
     }
@@ -84,60 +98,182 @@ abstract class Form implements FormInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function getFields()
+    public function getName()
     {
-        return $this->fields;
+        return $this->name;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function setClass($class)
     {
-        foreach ($this->fields as $field) {
-            if ($field->getId() == $offset) {
-                return true;
-            }
-        }
+        $this->class = $class;
 
-        return false;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function setDescription($description)
     {
-        foreach ($this->fields as $field) {
-            if ($field->getId() == $offset) {
-                return $field;
-            }
-        }
+        $this->description = $description;
 
-        return null;
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function getDescription()
     {
-        foreach ($this->fields as $key => $field) {
-            if ($field->getId() == $offset) {
-                $this->fields[$key] = $value;
-            }
-        }
+        return $this->description;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function setProperty(PropertyInterface $property)
     {
-        foreach ($this->fields as $key => $field) {
-            if ($field->getId() == $offset) {
-                unset($this->fields[$key]);
-            }
-        }
+        $this->property = $property;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setOptions(Collection $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addOption(FormOptionInterface $option)
+    {
+        return $this->options->add($option);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeOption(FormOptionInterface $option)
+    {
+        return $this->options->removeElement($option);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setChildren(Collection $children)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addChildren(FormInterface $child)
+    {
+        return $this->children->add($child);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeChildren(FormInterface $child)
+    {
+        return $this->children->removeElement($child);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setEnabled($value)
+    {
+        $this->enabled = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isForm()
+    {
+        return $this->type == self::TYPE_FORM;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isField()
+    {
+        return $this->type == self::TYPE_FIELD;
     }
 }

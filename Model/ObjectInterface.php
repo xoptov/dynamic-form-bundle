@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 interface ObjectInterface
 {
     /**
@@ -10,13 +12,13 @@ interface ObjectInterface
     public function getId();
 
     /**
-     * @param ObjectPropertyInterface[] $properties
-     * @return mixed
+     * @param Collection $properties
+     * @return ObjectInterface
      */
-    public function setProperties($properties);
+    public function setProperties(Collection $properties);
 
     /**
-     * @return ObjectPropertyInterface[]
+     * @return Collection
      */
     public function getProperties();
 }

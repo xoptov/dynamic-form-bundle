@@ -2,7 +2,7 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-abstract class Property implements PropertyInterface
+abstract class Option implements OptionInterface
 {
     /** @var mixed */
     protected $id;
@@ -10,8 +10,8 @@ abstract class Property implements PropertyInterface
     /** @var string */
     protected $name;
 
-    /** @var MeasureInterface */
-    protected $measure;
+    /** @var string */
+    protected $description;
 
     /**
      * @return mixed
@@ -42,9 +42,9 @@ abstract class Property implements PropertyInterface
     /**
      * {@inheritdoc}
      */
-    public function setMeasure(MeasureInterface $measure)
+    public function setDescription($description)
     {
-        $this->measure = $measure;
+        $this->description = $description;
 
         return $this;
     }
@@ -52,8 +52,8 @@ abstract class Property implements PropertyInterface
     /**
      * {@inheritdoc}
      */
-    public function getMeasure()
+    public function getDescription()
     {
-        return $this->measure;
+        return $this->description;
     }
 }
