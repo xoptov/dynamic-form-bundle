@@ -4,7 +4,7 @@ namespace Xoptov\DynamicFormBundle\Entity;
 
 use Xoptov\DynamicFormBundle\Model\ObjectProperty as BaseObjectProperty;
 
-abstract class ObjectProperty extends BaseObjectProperty
+class ObjectProperty extends BaseObjectProperty
 {
     /** @var integer */
     protected $id;

@@ -9,6 +9,9 @@ abstract class Form implements FormInterface
     /** @var mixed */
     protected $id;
 
+    /** @var string */
+    protected $type = self::TYPE_FORM;
+
     /** @var FormInterface */
     protected $parent;
 
@@ -42,6 +45,25 @@ abstract class Form implements FormInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $type
+     * @return Form
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -237,5 +259,21 @@ abstract class Form implements FormInterface
     public function isEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isForm()
+    {
+        return $this->type == self::TYPE_FORM;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isField()
+    {
+        return $this->type == self::TYPE_FIELD;
     }
 }

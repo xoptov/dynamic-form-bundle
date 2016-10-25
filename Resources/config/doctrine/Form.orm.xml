@@ -9,6 +9,7 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
+        <field name="type" column="type" type="string"/>
         <field name="name" column="name" type="string"/>
         <field name="class" column="class" type="string" nullable="true"/>
         <field name="description" column="description" type="string" nullable="true"/>

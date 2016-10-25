@@ -64,10 +64,8 @@ trait PolymorphicValueTrait
             return false;
         }
 
-        $values = explode(',', $value);
-
-        if (count($values) > 1) {
-            $this->setValueSet($values);
+        if (is_array($value)) {
+            $this->setValueSet($value);
         } elseif (0 === intval($value) || 1 === intval($value)) {
             $this->setValueBoolean($value);
         } elseif (floatval($value)) {

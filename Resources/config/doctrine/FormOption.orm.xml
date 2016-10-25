@@ -19,5 +19,8 @@
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\OptionInterface" field="option">
             <join-column name="option_id" referenced-column-name="id"/>
         </many-to-one>
+        <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FormOptionInterface" field="parent" inversed-by="children">
+            <join-column name="parent_id" referenced-column-name="id"/>
+        </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

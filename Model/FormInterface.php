@@ -6,10 +6,24 @@ use Doctrine\Common\Collections\Collection;
 
 interface FormInterface
 {
+    const TYPE_FORM = 'form';
+    const TYPE_FIELD = 'field';
+
     /**
      * @return mixed
      */
     public function getId();
+
+    /**
+     * @param string $type
+     * @return FormInterface
+     */
+    public function setType($type);
+
+    /**
+     * @return string
+     */
+    public function getType();
 
     /**
      * @param FormInterface $parent
@@ -133,4 +147,14 @@ interface FormInterface
      * @return boolean
      */
     public function isEnabled();
+
+    /**
+     * @return boolean
+     */
+    public function isForm();
+
+    /**
+     * @return boolean
+     */
+    public function isField();
 }

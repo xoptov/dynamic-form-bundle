@@ -15,7 +15,7 @@ interface ObjectInterface
      * @param Collection $properties
      * @return ObjectInterface
      */
-    public function setProperties($properties);
+    public function setProperties(Collection $properties);
 
     /**
      * @return Collection
