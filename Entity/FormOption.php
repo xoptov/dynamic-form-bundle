@@ -2,7 +2,6 @@
 
 namespace Xoptov\DynamicFormBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Xoptov\DynamicFormBundle\Model\FormInterface;
 use Xoptov\DynamicFormBundle\Model\FormOption as BaseFormOption;
 use Xoptov\DynamicFormBundle\Model\FormOptionInterface;
@@ -17,11 +16,6 @@ class FormOption extends BaseFormOption
 
     /** @var FormInterface */
     protected $form;
-
-    public function __construct()
-    {
-        $this->children = new ArrayCollection();
-    }
 
     /**
      * @return int

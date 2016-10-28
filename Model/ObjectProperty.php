@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class ObjectProperty implements ObjectPropertyInterface
 {
     use PolymorphicValueTrait;
@@ -14,6 +16,14 @@ abstract class ObjectProperty implements ObjectPropertyInterface
 
     /** @var int */
     protected $priority;
+
+    /**
+     * ObjectProperty constructor.
+     */
+    public function __construct()
+    {
+        $this->valueCollection = new ArrayCollection();
+    }
 
     /**
      * {@inheritdoc}

@@ -2,10 +2,15 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 trait PolymorphicValueTrait
 {
     /** @var bool */
     protected $valueBoolean;
+
+    /** @var int */
+    protected $valueInteger;
 
     /** @var float */
     protected $valueFloat;
@@ -14,7 +19,10 @@ trait PolymorphicValueTrait
     protected $valueString;
 
     /** @var array */
-    protected $valueSet = array();
+    protected $valueArray = array();
+
+    /** @var Collection */
+    protected $valueCollection;
 
     /**
      * @param boolean $value
@@ -23,6 +31,15 @@ trait PolymorphicValueTrait
     {
         $this->eraseValues();
         $this->valueBoolean = $value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setValueInteger($value)
+    {
+        $this->eraseValues();
+        $this->valueInteger = $value;
     }
 
     /**
@@ -46,10 +63,19 @@ trait PolymorphicValueTrait
     /**
      * @param array $values
      */
-    public function setValueSet(array $values)
+    public function setValueArray(array $values)
     {
         $this->eraseValues();
-        $this->valueSet = $values;
+        $this->valueArray = $values;
+    }
+
+    /**
+     * @param Collection $values
+     */
+    public function setValueCollection(Collection $values)
+    {
+        $this->eraseValues();
+        $this->values = $values;
     }
 
     /**
@@ -64,11 +90,15 @@ trait PolymorphicValueTrait
             return false;
         }
 
-        if (is_array($value)) {
-            $this->setValueSet($value);
-        } elseif (0 === intval($value) || 1 === intval($value)) {
+        if ($value instanceof Collection) {
+            $this->setValueCollection($value);
+        } elseif (is_array($value)) {
+            $this->setValueArray($value);
+        } elseif (is_bool($value)) {
             $this->setValueBoolean($value);
-        } elseif (floatval($value)) {
+        } elseif (is_integer($value)){
+            $this->setValueInteger($value);
+        } elseif (is_float($value)) {
             $this->setValueFloat(floatval($value));
         } else {
             $this->setValueString($value);
@@ -82,10 +112,14 @@ trait PolymorphicValueTrait
      */
     public function getValue()
     {
-        if (count($this->valueSet) > 0) {
-            return $this->valueSet;
+        if ($this->valueCollection->count()) {
+            return $this->valueCollection;
+        } elseif (count($this->valueArray)){
+            return $this->valueArray;
         } elseif (null !== $this->valueBoolean) {
             return $this->valueBoolean;
+        } elseif (null != $this->valueInteger) {
+            return $this->valueInteger;
         } elseif (null !== $this->valueFloat) {
             return $this->valueFloat;
         } elseif (null !== $this->valueString) {
@@ -98,8 +132,10 @@ trait PolymorphicValueTrait
     private function eraseValues()
     {
         $this->valueBoolean = null;
+        $this->valueInteger = null;
         $this->valueFloat = null;
         $this->valueString = null;
-        $this->valueSet = array();
+        $this->valueArray = array();
+        $this->valueCollection->clear();
     }
 }
