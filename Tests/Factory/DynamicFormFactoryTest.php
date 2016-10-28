@@ -12,7 +12,6 @@ use Xoptov\DynamicFormBundle\DataStructure\FormHeap;
 use Xoptov\DynamicFormBundle\Entity\Form;
 use Xoptov\DynamicFormBundle\Entity\Option;
 use Xoptov\DynamicFormBundle\Entity\FormOption;
-use Xoptov\DynamicFormBundle\Form\Type\ObjectType;
 use Xoptov\DynamicFormBundle\Model\FormInterface;
 use Xoptov\DynamicFormBundle\Model\ObjectInterface;
 use Xoptov\DynamicFormBundle\Factory\DynamicFormFactory;

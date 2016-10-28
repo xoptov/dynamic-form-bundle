@@ -2,6 +2,8 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 interface PropertyInterface
 {
     /**
@@ -16,7 +18,7 @@ interface PropertyInterface
     public function setName($name);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName();
 
@@ -30,4 +32,27 @@ interface PropertyInterface
      * @return MeasureInterface
      */
     public function getMeasure();
+
+    /**
+     * @param Collection $values
+     * @return PropertyInterface
+     */
+    public function setValues(Collection $values);
+
+    /**
+     * @return Collection
+     */
+    public function getValues();
+
+    /**
+     * @param ValueInterface $value
+     * @return bool
+     */
+    public function addValue(ValueInterface $value);
+
+    /**
+     * @param ValueInterface $value
+     * @return bool
+     */
+    public function removeValue(ValueInterface $value);
 }
