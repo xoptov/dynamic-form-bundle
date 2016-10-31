@@ -4,6 +4,7 @@ namespace Xoptov\DynamicFormBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 abstract class Form implements FormInterface
 {
@@ -20,7 +21,7 @@ abstract class Form implements FormInterface
     protected $name;
 
     /** @var string */
-    protected $class;
+    protected $class = FormType::class;
 
     /** @var string */
     protected $description;

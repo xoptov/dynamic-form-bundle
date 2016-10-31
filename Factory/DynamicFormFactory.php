@@ -2,14 +2,16 @@
 
 namespace Xoptov\DynamicFormBundle\Factory;
 
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Xoptov\DynamicFormBundle\Exception\OptionException;
 use Xoptov\DynamicFormBundle\Model\FormInterface;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface as BaseFormInterface;
 use Xoptov\DynamicFormBundle\Model\FormOptionInterface;
 use Xoptov\DynamicFormBundle\DataStructure\FormHeap;
+use Xoptov\DynamicFormBundle\Model\ValueInterface;
 
 class DynamicFormFactory
 {
@@ -18,19 +20,19 @@ class DynamicFormFactory
 
     /**
      * DynamicFormFactory constructor.
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      */
-    public function __construct(FormFactory $formFactory)
+    public function __construct(FormFactoryInterface $formFactory)
     {
         $this->formFactory = $formFactory;
     }
 
     /**
      * @param FormInterface $description
-     * @param mixed $data
+     * @param array $data
      * @return BaseFormInterface
      */
-    public function createForm(FormInterface $description, $data)
+    public function createForm(FormInterface $description, $data = null)
     {
         $options = $this->createOptions($description);
         $formBuilder = $this->formFactory->createBuilder($description->getClass(), $data, $options);
@@ -67,6 +69,19 @@ class DynamicFormFactory
             }
         }
 
+        if ($description->getType() == EntityType::class && array_key_exists('class', $options) && is_a($options['class'], ValueInterface::class)) {
+            $property = $description->getProperty();
+            if ($property instanceof $property && !$property->getValues()->isEmpty()) {
+                // Prepare query builder for choices.
+                $options['query_builder'] = function(EntityRepository $repo) use ($property) {
+                    $qb = $repo->createQueryBuilder('v')
+                        ->where('v.property = :property')
+                        ->setParameter('property', $property);
+                    return $qb;
+                };
+            }
+        }
+
         return $options;
     }
 
@@ -76,6 +91,8 @@ class DynamicFormFactory
      */
     private function appendFields(FormBuilderInterface $builder, FormInterface $description)
     {
+        $builder->setCompound(true);
+
         $fields  = new FormHeap();
         $parent = $description->getParent();
 
