@@ -2,16 +2,18 @@
 
 namespace Xoptov\DynamicFormBundle\Tests\Factory;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Xoptov\DynamicFormBundle\DataStructure\FormHeap;
 use Xoptov\DynamicFormBundle\Entity\Form;
 use Xoptov\DynamicFormBundle\Entity\Option;
 use Xoptov\DynamicFormBundle\Entity\FormOption;
+use Xoptov\DynamicFormBundle\Entity\Value;
 use Xoptov\DynamicFormBundle\Model\FormInterface;
 use Xoptov\DynamicFormBundle\Model\ObjectInterface;
 use Xoptov\DynamicFormBundle\Factory\DynamicFormFactory;
@@ -24,9 +26,13 @@ class DynamicFormFactoryTest extends KernelTestCase
     /** @var FormInterface */
     private $secondForm;
 
+    /** @var FormFactoryInterface */
+    private static $formFactory;
+
     public static function setUpBeforeClass()
     {
         static::bootKernel();
+        static::$formFactory = static::$kernel->getContainer()->get('form.factory');
     }
 
     public function setUp()
@@ -41,9 +47,29 @@ class DynamicFormFactoryTest extends KernelTestCase
         $field = new Form();
         $field
             ->setType(FormInterface::TYPE_FIELD)
-            ->setName('engine')
-            ->setClass(ChoiceType::class)
+            ->setName('fuelType')
+            ->setClass(EntityType::class)
             ->setPriority(2048)
+            ->setEnabled(true);
+
+        $option = new Option();
+        $option->setName('class');
+
+        $formOption = new FormOption();
+        $formOption
+            ->setForm($field)
+            ->setOption($option)
+            ->setValue(Value::class);
+
+        $field->addOption($formOption);
+        $this->firstForm->addChildren($field);
+
+        $field = new Form();
+        $field
+            ->setType(FormInterface::TYPE_FIELD)
+            ->setName('enginePower')
+            ->setClass(NumberType::class)
+            ->setPriority(1024)
             ->setEnabled(true);
 
         $this->firstForm->addChildren($field);
@@ -51,9 +77,9 @@ class DynamicFormFactoryTest extends KernelTestCase
         $field = new Form();
         $field
             ->setType(FormInterface::TYPE_FIELD)
-            ->setName('fuel')
-            ->setClass(ChoiceType::class)
-            ->setPriority(1024)
+            ->setName('engineVolume')
+            ->setClass(NumberType::class)
+            ->setPriority(512)
             ->setEnabled(true);
 
         $this->firstForm->addChildren($field);
@@ -73,7 +99,6 @@ class DynamicFormFactoryTest extends KernelTestCase
             ->setForm($this->secondForm)
             ->setOption($option)
             ->setValue(ObjectInterface::class);
-
         $this->secondForm->addOption($formOption);
 
         $option = new Option();
@@ -84,7 +109,6 @@ class DynamicFormFactoryTest extends KernelTestCase
             ->setForm($this->secondForm)
             ->setOption($option)
             ->setValue(true);
-
         $this->secondForm->addOption($formOption);
 
         // Prepare fields for description.
@@ -94,8 +118,20 @@ class DynamicFormFactoryTest extends KernelTestCase
             ->setType(FormInterface::TYPE_FIELD)
             ->setName('doors')
             ->setClass(ChoiceType::class)
-            ->setPriority(512)
+            ->setPriority(256)
             ->setEnabled(true);
+
+        $option = new Option();
+        $option->setName('choices');
+
+        $formOption = new FormOption();
+        $formOption
+            ->setForm($field)
+            ->setOption($option)
+            ->setValue(array(
+                'select.option.yes' => true,
+                'select.option.no' => false
+            ));
 
         $this->secondForm->addChildren($field);
 
@@ -103,20 +139,38 @@ class DynamicFormFactoryTest extends KernelTestCase
         $field
             ->setType(FormInterface::TYPE_FIELD)
             ->setName('transmission')
-            ->setClass(ChoiceType::class)
-            ->setPriority(256)
+            ->setClass(EntityType::class)
+            ->setPriority(128)
             ->setEnabled(true);
 
+        $option = new Option();
+        $option->setName('class');
+
+        $formOption = new FormOption();
+        $formOption
+            ->setForm($field)
+            ->setOption($option)
+            ->setValue(Value::class);
+        $field->addOption($formOption);
         $this->secondForm->addChildren($field);
 
         $field = new Form();
         $field
             ->setType(FormInterface::TYPE_FIELD)
             ->setName('gear')
-            ->setClass(ChoiceType::class)
-            ->setPriority(128)
+            ->setClass(EntityType::class)
+            ->setPriority(64)
             ->setEnabled(true);
 
+        $option = new Option();
+        $option->setName('class');
+
+        $formOption = new FormOption();
+        $formOption
+            ->setForm($field)
+            ->setOption($option)
+            ->setValue(Value::class);
+        $field->addOption($formOption);
         $this->secondForm->addChildren($field);
 
         $field = new Form();
@@ -126,7 +180,6 @@ class DynamicFormFactoryTest extends KernelTestCase
             ->setClass(TextType::class)
             ->setPriority(4096)
             ->setEnabled(true);
-
         $this->secondForm->addChildren($field);
 
         $this->secondForm->setParent($this->firstForm);
@@ -134,9 +187,7 @@ class DynamicFormFactoryTest extends KernelTestCase
 
     public function testCreateOptions()
     {
-        $mockFormFactory = $this->createMock(FormFactory::class);
-
-        $dynamicFormFactory = new DynamicFormFactory($mockFormFactory);
+        $dynamicFormFactory = new DynamicFormFactory($this->createMock(FormFactory::class));
         $reflection = new \ReflectionObject($dynamicFormFactory);
         $method = $reflection->getMethod('createOptions');
         $method->setAccessible(true);
@@ -158,56 +209,72 @@ class DynamicFormFactoryTest extends KernelTestCase
 
     public function testAppendFieldsWithoutInheritance()
     {
-        $mockEventDispatcher = $this->createMock(EventDispatcher::class);
-        $mockFormFactory = $this->createMock(FormFactory::class);
 
-        $formBuilder = new FormBuilder('form', null, $mockEventDispatcher, $mockFormFactory);
+        $formBuilder = static::$formFactory->createBuilder();
 
-        $dynamicFormFactory = new DynamicFormFactory($mockFormFactory);
+        $dynamicFormFactory = new DynamicFormFactory(static::$formFactory);
         $reflection = new \ReflectionObject($dynamicFormFactory);
         $method = $reflection->getMethod('appendFields');
         $method->setAccessible(true);
 
         $method->invoke($dynamicFormFactory, $formBuilder, $this->firstForm);
 
-        $this->assertTrue($formBuilder->has('engine'));
-        $this->assertTrue($formBuilder->has('fuel'));
+        $form = $formBuilder->getForm();
+
+        $this->assertTrue($form->isSynchronized());
+        $this->assertTrue($form->has('fuelType'));
+        $this->assertTrue($form->has('enginePower'));
     }
 
     public function testAppendFieldsWithInheritance()
     {
-        $mockEventDispatcher = $this->createMock(EventDispatcher::class);
-        $mockFormFactory = $this->createMock(FormFactory::class);
+        $formBuilder = static::$formFactory->createBuilder();
 
-        $formBuilder = new FormBuilder('form', null, $mockEventDispatcher, $mockFormFactory);
-
-        $dynamicFormFactory = new DynamicFormFactory($mockFormFactory);
+        $dynamicFormFactory = new DynamicFormFactory(static::$formFactory);
         $reflection = new \ReflectionObject($dynamicFormFactory);
         $method = $reflection->getMethod('appendFields');
         $method->setAccessible(true);
 
         $method->invoke($dynamicFormFactory, $formBuilder, $this->secondForm);
 
-        $this->assertTrue($formBuilder->has('engine'));
-        $this->assertTrue($formBuilder->has('fuel'));
-        $this->assertTrue($formBuilder->has('doors'));
-        $this->assertTrue($formBuilder->has('transmission'));
-        $this->assertTrue($formBuilder->has('gear'));
-        $this->assertTrue($formBuilder->has('title'));
+        $form = $formBuilder->getForm();
+
+        $this->assertTrue($form->isSynchronized());
+        $this->assertTrue($form->has('fuelType'));
+        $this->assertTrue($form->has('enginePower'));
+        $this->assertTrue($form->has('engineVolume'));
+        $this->assertTrue($form->has('doors'));
+        $this->assertTrue($form->has('transmission'));
+        $this->assertTrue($form->has('gear'));
+        $this->assertTrue($form->has('title'));
     }
 
     public function testInheritParentFields()
     {
-        $mockFormFactory = $this->createMock(FormFactory::class);
         $fields = new FormHeap();
 
-        $dynamicFormFactory = new DynamicFormFactory($mockFormFactory);
+        $dynamicFormFactory = new DynamicFormFactory($this->createMock(FormFactory::class));
         $reflection = new \ReflectionObject($dynamicFormFactory);
         $method = $reflection->getMethod('inheritParentFields');
         $method->setAccessible(true);
 
         $method->invoke($dynamicFormFactory, $fields, $this->secondForm);
 
-        $this->assertCount(6, $fields);
+        $this->assertCount(7, $fields);
+    }
+
+    public function testCreateForm()
+    {
+        $dynamicFormFactory = new DynamicFormFactory(static::$formFactory);
+        $form = $dynamicFormFactory->createForm($this->secondForm);
+
+        $this->assertTrue($form->isSynchronized());
+        $this->assertTrue($form->has('fuelType'));
+        $this->assertTrue($form->has('enginePower'));
+        $this->assertTrue($form->has('engineVolume'));
+        $this->assertTrue($form->has('doors'));
+        $this->assertTrue($form->has('transmission'));
+        $this->assertTrue($form->has('gear'));
+        $this->assertTrue($form->has('title'));
     }
 }
