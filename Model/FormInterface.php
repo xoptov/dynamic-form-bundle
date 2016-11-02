@@ -37,6 +37,17 @@ interface FormInterface
     public function getParent();
 
     /**
+     * @param string $title
+     * @return FormInterface
+     */
+    public function setTitle($title);
+
+    /**
+     * @return string
+     */
+    public function getTitle();
+
+    /**
      * @param string $name
      * @return FormInterface
      */

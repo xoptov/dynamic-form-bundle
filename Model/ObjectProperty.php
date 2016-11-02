@@ -3,11 +3,10 @@
 namespace Xoptov\DynamicFormBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-abstract class ObjectProperty implements ObjectPropertyInterface
+abstract class ObjectProperty extends PolymorphicValueAware implements ObjectPropertyInterface
 {
-    use PolymorphicValueTrait;
-
     /** @var ObjectInterface */
     protected $object;
 
@@ -17,8 +16,11 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     /** @var int */
     protected $priority;
 
+    /** @var Collection */
+    protected $valueCollection;
+
     /**
-     * ObjectProperty constructor.
+     * PolymorphicValueAware constructor.
      */
     public function __construct()
     {
@@ -77,5 +79,46 @@ abstract class ObjectProperty implements ObjectPropertyInterface
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * @param Value $value
+     */
+    public function addValue(Value $value)
+    {
+        $this->eraseValues();
+        $this->valueCollection->add($value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setValue($value)
+    {
+        if ($value instanceof Value) {
+            $this->addValue($value);
+            return true;
+        } else {
+            return parent::setValue($value);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getValue()
+    {
+        if (!$this->valueCollection->isEmpty()) {
+            return $this->valueCollection;
+        } else {
+            return parent::getValue();
+        }
+    }
+
+    protected function eraseValues()
+    {
+        parent::eraseValues();
+
+        $this->valueCollection->clear();
     }
 }
