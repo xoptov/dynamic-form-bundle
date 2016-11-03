@@ -3,6 +3,7 @@
 namespace Xoptov\DynamicFormBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 abstract class ObjectProperty extends PolymorphicValueAware implements ObjectPropertyInterface
 {
@@ -81,23 +82,21 @@ abstract class ObjectProperty extends PolymorphicValueAware implements ObjectPro
     }
 
     /**
-     * @param Value $value
-     * @todo need refactoring
+     * @param Collection $values
      */
-    public function addValue(Value $value)
+    public function setValueCollection(Collection $values)
     {
-        $this->eraseValues();
-        $this->valueCollection->add($value);
+        parent::eraseValues();
+        $this->valueCollection = $values;
     }
 
     /**
      * {@inheritdoc}
-     * @todo need refactoring
      */
     public function setValue($value)
     {
-        if ($value instanceof Value) {
-            $this->addValue($value);
+        if ($value instanceof Collection) {
+            $this->setValueCollection($value);
             return true;
         } else {
             return parent::setValue($value);
@@ -106,7 +105,6 @@ abstract class ObjectProperty extends PolymorphicValueAware implements ObjectPro
 
     /**
      * {@inheritdoc}
-     * @todo need refactoring
      */
     public function getValue()
     {
@@ -115,15 +113,5 @@ abstract class ObjectProperty extends PolymorphicValueAware implements ObjectPro
         } else {
             return parent::getValue();
         }
-    }
-
-    /**
-     * @todo need refactoring
-     */
-    protected function eraseValues()
-    {
-        parent::eraseValues();
-
-        $this->valueCollection->clear();
     }
 }

@@ -19,6 +19,9 @@ abstract class PolymorphicValueAware
     /** @var array */
     protected $valueArray = array();
 
+    /** @var ValueInterface */
+    protected $valueObject;
+
     /**
      * @param boolean $value
      */
@@ -65,6 +68,15 @@ abstract class PolymorphicValueAware
     }
 
     /**
+     * @param ValueInterface $value
+     */
+    public function setValueObject(ValueInterface $value)
+    {
+        $this->eraseValues();
+        $this->valueObject = $value;
+    }
+
+    /**
      * @param mixed $value
      * @return boolean
      */
@@ -76,7 +88,9 @@ abstract class PolymorphicValueAware
             return false;
         }
 
-        if (is_array($value)) {
+        if ($value instanceof ValueInterface) {
+            $this->setValueObject($value);
+        } elseif (is_array($value)) {
             $this->setValueArray($value);
         } elseif (is_bool($value)) {
             $this->setValueBoolean($value);
@@ -96,11 +110,13 @@ abstract class PolymorphicValueAware
      */
     public function getValue()
     {
-        if (count($this->valueArray)){
+        if ($this->valueObject instanceof ValueInterface){
+            return $this->valueObject;
+        } elseif (count($this->valueArray)){
             return $this->valueArray;
         } elseif (null !== $this->valueBoolean) {
             return $this->valueBoolean;
-        } elseif (null != $this->valueInteger) {
+        } elseif (null !== $this->valueInteger) {
             return $this->valueInteger;
         } elseif (null !== $this->valueFloat) {
             return $this->valueFloat;
@@ -118,5 +134,6 @@ abstract class PolymorphicValueAware
         $this->valueFloat = null;
         $this->valueString = null;
         $this->valueArray = array();
+        $this->valueObject = null;
     }
 }
