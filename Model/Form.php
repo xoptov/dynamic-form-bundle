@@ -18,6 +18,9 @@ abstract class Form implements FormInterface
     protected $parent;
 
     /** @var string */
+    protected $title;
+
+    /** @var string */
     protected $name;
 
     /** @var string */
@@ -99,6 +102,25 @@ abstract class Form implements FormInterface
     /**
      * {@inheritdoc}
      */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $name
+     * @return Form
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -107,7 +129,7 @@ abstract class Form implements FormInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

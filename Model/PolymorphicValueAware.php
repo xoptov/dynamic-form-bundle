@@ -2,9 +2,7 @@
 
 namespace Xoptov\DynamicFormBundle\Model;
 
-use Doctrine\Common\Collections\Collection;
-
-trait PolymorphicValueTrait
+abstract class PolymorphicValueAware
 {
     /** @var bool */
     protected $valueBoolean;
@@ -20,9 +18,6 @@ trait PolymorphicValueTrait
 
     /** @var array */
     protected $valueArray = array();
-
-    /** @var Collection */
-    protected $valueCollection;
 
     /**
      * @param boolean $value
@@ -70,15 +65,6 @@ trait PolymorphicValueTrait
     }
 
     /**
-     * @param Collection $values
-     */
-    public function setValueCollection(Collection $values)
-    {
-        $this->eraseValues();
-        $this->values = $values;
-    }
-
-    /**
      * @param mixed $value
      * @return boolean
      */
@@ -90,9 +76,7 @@ trait PolymorphicValueTrait
             return false;
         }
 
-        if ($value instanceof Collection) {
-            $this->setValueCollection($value);
-        } elseif (is_array($value)) {
+        if (is_array($value)) {
             $this->setValueArray($value);
         } elseif (is_bool($value)) {
             $this->setValueBoolean($value);
@@ -112,9 +96,7 @@ trait PolymorphicValueTrait
      */
     public function getValue()
     {
-        if ($this->valueCollection->count()) {
-            return $this->valueCollection;
-        } elseif (count($this->valueArray)){
+        if (count($this->valueArray)){
             return $this->valueArray;
         } elseif (null !== $this->valueBoolean) {
             return $this->valueBoolean;
@@ -129,13 +111,12 @@ trait PolymorphicValueTrait
         }
     }
 
-    private function eraseValues()
+    protected function eraseValues()
     {
         $this->valueBoolean = null;
         $this->valueInteger = null;
         $this->valueFloat = null;
         $this->valueString = null;
         $this->valueArray = array();
-        $this->valueCollection->clear();
     }
 }

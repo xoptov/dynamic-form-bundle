@@ -5,10 +5,8 @@ namespace Xoptov\DynamicFormBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-abstract class FormOption implements FormOptionInterface
+abstract class FormOption extends PolymorphicValueAware implements FormOptionInterface
 {
-    use PolymorphicValueTrait;
-
     /** @var OptionInterface */
     protected $option;
 
@@ -20,7 +18,6 @@ abstract class FormOption implements FormOptionInterface
      */
     public function __construct()
     {
-        $this->valueCollection = new ArrayCollection();
         $this->option = new ArrayCollection();
         $this->children = new ArrayCollection();
     }

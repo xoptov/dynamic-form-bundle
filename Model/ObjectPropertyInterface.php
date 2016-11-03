@@ -38,13 +38,13 @@ interface ObjectPropertyInterface
     public function getPriority();
 
     /**
-     * @param boolean|float|string|array $value
+     * @param mixed $value
      * @return mixed
      */
     public function setValue($value);
 
     /**
-     * @return boolean|float|string|array
+     * @return mixed
      */
     public function getValue();
 }
