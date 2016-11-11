@@ -13,7 +13,6 @@
         <field name="valueInteger" column="value_integer" type="integer" nullable="true"/>
         <field name="valueFloat" column="value_float" type="float" nullable="true"/>
         <field name="valueString" column="value_string" type="string" nullable="true"/>
-        <field name="valueArray" column="value_array" type="array" nullable="false"/>
         <field name="priority" column="priority" type="smallint" nullable="true">
             <options>
                 <option name="unsigned">true</option>

@@ -16,9 +16,6 @@ abstract class PolymorphicValueAware
     /** @var string */
     protected $valueString;
 
-    /** @var array */
-    protected $valueArray = array();
-
     /** @var ValueInterface */
     protected $valueObject;
 
@@ -59,15 +56,6 @@ abstract class PolymorphicValueAware
     }
 
     /**
-     * @param array $values
-     */
-    public function setValueArray(array $values)
-    {
-        $this->eraseValues();
-        $this->valueArray = $values;
-    }
-
-    /**
      * @param ValueInterface $value
      */
     public function setValueObject(ValueInterface $value)
@@ -90,8 +78,6 @@ abstract class PolymorphicValueAware
 
         if ($value instanceof ValueInterface) {
             $this->setValueObject($value);
-        } elseif (is_array($value)) {
-            $this->setValueArray($value);
         } elseif (is_bool($value)) {
             $this->setValueBoolean($value);
         } elseif (is_integer($value)){
@@ -112,8 +98,6 @@ abstract class PolymorphicValueAware
     {
         if ($this->valueObject instanceof ValueInterface){
             return $this->valueObject;
-        } elseif (count($this->valueArray)){
-            return $this->valueArray;
         } elseif (null !== $this->valueBoolean) {
             return $this->valueBoolean;
         } elseif (null !== $this->valueInteger) {
@@ -133,7 +117,6 @@ abstract class PolymorphicValueAware
         $this->valueInteger = null;
         $this->valueFloat = null;
         $this->valueString = null;
-        $this->valueArray = array();
         $this->valueObject = null;
     }
 }
