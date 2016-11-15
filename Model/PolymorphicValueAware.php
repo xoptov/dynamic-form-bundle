@@ -70,7 +70,7 @@ abstract class PolymorphicValueAware
      */
     public function setValue($value)
     {
-        if (null == $value) {
+        if (null === $value) {
             $this->eraseValues();
 
             return false;
@@ -78,14 +78,14 @@ abstract class PolymorphicValueAware
 
         if ($value instanceof ValueInterface) {
             $this->setValueObject($value);
-        } elseif (is_bool($value)) {
-            $this->setValueBoolean($value);
-        } elseif (is_integer($value)){
+        } elseif (is_string($value)) {
+            $this->setValueString($value);
+        } elseif (is_integer($value) && ($value !== true || $value !== false)){
             $this->setValueInteger($value);
         } elseif (is_float($value)) {
             $this->setValueFloat(floatval($value));
         } else {
-            $this->setValueString($value);
+            $this->setValueBoolean($value);
         }
 
         return true;
@@ -98,14 +98,14 @@ abstract class PolymorphicValueAware
     {
         if ($this->valueObject instanceof ValueInterface){
             return $this->valueObject;
-        } elseif (null !== $this->valueBoolean) {
-            return $this->valueBoolean;
         } elseif (null !== $this->valueInteger) {
             return $this->valueInteger;
         } elseif (null !== $this->valueFloat) {
             return $this->valueFloat;
         } elseif (null !== $this->valueString) {
             return $this->valueString;
+        } elseif (null !== $this->valueBoolean) {
+            return $this->valueBoolean;
         } else {
             return null;
         }
