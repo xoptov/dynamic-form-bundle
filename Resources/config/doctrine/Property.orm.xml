@@ -11,7 +11,7 @@
         </id>
         <field name="name" column="name" type="string"/>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\MeasureInterface" field="measure">
-            <join-column name="measure_id" referenced-column-name="id"/>
+            <join-column name="measure_id" referenced-column-name="id" nullable="true" on-delete="SET NULL"/>
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

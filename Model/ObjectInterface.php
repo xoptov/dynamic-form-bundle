@@ -21,4 +21,16 @@ interface ObjectInterface
      * @return Collection
      */
     public function getProperties();
+
+    /**
+     * @param ObjectPropertyInterface $objectProperty
+     * @return boolean
+     */
+    public function addProperty(ObjectPropertyInterface $objectProperty);
+
+    /**
+     * @param ObjectPropertyInterface $objectProperty
+     * @return boolean
+     */
+    public function removeProperty(ObjectPropertyInterface $objectProperty);
 }
