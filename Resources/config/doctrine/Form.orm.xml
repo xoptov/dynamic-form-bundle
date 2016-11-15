@@ -21,10 +21,10 @@
         </field>
         <field name="enabled" column="enabled" type="boolean"/>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\FormInterface" field="parent" inversed-by="children">
-            <join-column name="parent_id" referenced-column-name="id"/>
+            <join-column name="parent_id" referenced-column-name="id" nullable="true" on-delete="SET NULL"/>
         </many-to-one>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
-            <join-column name="property_id" referenced-column-name="id"/>
+            <join-column name="property_id" referenced-column-name="id" on-delete="CASCADE"/>
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

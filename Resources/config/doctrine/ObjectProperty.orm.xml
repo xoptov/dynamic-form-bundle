@@ -19,13 +19,13 @@
             </options>
         </field>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\ObjectInterface" field="object" inversed-by="properties">
-            <join-column name="object_id" referenced-column-name="id" nullable="false"/>
+            <join-column name="object_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
         </many-to-one>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\PropertyInterface" field="property">
-            <join-column name="property_id" referenced-column-name="id" nullable="false"/>
+            <join-column name="property_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
         </many-to-one>
         <many-to-one target-entity="Xoptov\DynamicFormBundle\Model\ValueInterface" field="valueObject">
-            <join-column name="value_id" referenced-column-name="id" nullable="true"/>
+            <join-column name="value_id" referenced-column-name="id" nullable="true" on-delete="SET NULL"/>
         </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>
