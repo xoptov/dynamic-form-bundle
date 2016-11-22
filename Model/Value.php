@@ -7,11 +7,14 @@ abstract class Value implements ValueInterface
     /** @var mixed */
     protected $id;
 
-    /** @var string */
-    protected $label;
+    /** @var Value */
+    protected $parent;
+
+    /** @var PropertyInterface */
+    protected $property;
 
     /** @var string */
-    protected $property;
+    protected $label;
 
     /**
      * {@inheritdoc}
@@ -19,6 +22,24 @@ abstract class Value implements ValueInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setParent(Value $value)
+    {
+        $this->parent = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**

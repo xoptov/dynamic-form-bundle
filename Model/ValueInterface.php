@@ -10,15 +10,15 @@ interface ValueInterface
     public function getId();
 
     /**
-     * @param string $value
+     * @param Value $value
      * @return ValueInterface
      */
-    public function setLabel($value);
+    public function setParent(Value $value);
 
     /**
-     * @return string
+     * @return ValueInterface
      */
-    public function getLabel();
+    public function getParent();
 
     /**
      * @param PropertyInterface $property
@@ -30,4 +30,15 @@ interface ValueInterface
      * @return Property
      */
     public function getProperty();
+
+    /**
+     * @param string $value
+     * @return ValueInterface
+     */
+    public function setLabel($value);
+
+    /**
+     * @return string
+     */
+    public function getLabel();
 }
